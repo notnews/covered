@@ -1,0 +1,16 @@
+# data caches (tracked: data/reference/, data/validation/, outputs/tables/)
+data/raw/
+data/interim/
+data/processed/
+outputs/figures/
+
+# python / tooling
+.venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+**/__pycache__/
+*.egg-info/
+uv.lock
+.env
+.DS_Store

@@ -1,0 +1,70 @@
+# Maps a substring of the raw speaker role to a coarse office category, for the
+# "concentration by office" cut. Matched case-insensitively in FILE ORDER, first
+# hit wins -- so more specific phrases (e.g. "vice president", "press secretary")
+# MUST precede the broader keyword they contain ("president", "secretary").
+# Coverage is partial by design: unmatched roles get office "" and are reported
+# as such. Office is descriptive of the role text, not nationality (a foreign
+# "president" is office=president); the US-sitting-president figure keys on
+# presidents.csv instead.
+keyword,office
+vice president,vice_president
+press secretary,press_secretary
+prime minister,diplomat
+foreign minister,diplomat
+secretary-general,diplomat
+secretary general,diplomat
+ambassador,diplomat
+president,president
+u.s. senate,senator
+senator,senator
+sen.,senator
+congressman,representative
+congresswoman,representative
+representative,representative
+u.s. house,representative
+rep.,representative
+governor,governor
+gov.,governor
+attorney general,cabinet_secretary
+secretary of,cabinet_secretary
+mayor,mayor
+spokesman,spokesperson
+spokeswoman,spokesperson
+spokesperson,spokesperson
+candidate,candidate
+prosecutor,judiciary
+district attorney,judiciary
+judge,judiciary
+justice,judiciary
+pentagon,military
+army,military
+navy,military
+marine,military
+air force,military
+general,military
+colonel,military
+(ret.),military
+professor,academic
+university,academic
+dean,academic
+journalist,journalist
+reporter,journalist
+columnist,journalist
+editor,journalist
+actor,entertainment
+actress,entertainment
+musician,entertainment
+singer,entertainment
+comedian,entertainment
+director,entertainment
+author,entertainment
+ceo,business
+chief executive,business
+founder,business
+chairman,business
+chairwoman,business
+rev.,religious
+pastor,religious
+bishop,religious
+rabbi,religious
+imam,religious

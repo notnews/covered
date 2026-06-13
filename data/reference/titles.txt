@@ -1,0 +1,41 @@
+# Honorifics / titles stripped during entity resolution and used to expand
+# PERSON spans leftward (e.g. "President Biden"). Lower-case, no trailing colon.
+president
+vice president
+senator
+sen.
+rep.
+representative
+congressman
+congresswoman
+governor
+gov.
+secretary
+attorney general
+attorney
+mayor
+ambassador
+justice
+judge
+general
+admiral
+colonel
+captain
+professor
+dr.
+doctor
+mr.
+mrs.
+ms.
+miss
+reverend
+rev.
+father
+prince
+princess
+king
+queen
+chairman
+chairwoman
+director
+chief

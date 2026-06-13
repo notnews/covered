@@ -1,0 +1,11 @@
+# Sitting US presidents over the corpus span, for president-by-date tagging.
+# canonical_id MUST match the id produced by entities.resolve_mentions (see
+# aliases.csv): lower-cased full name. start/end are inclusive-start, exclusive-
+# end inauguration dates (noon Jan 20). A blank end means still in office.
+canonical_id,party,start,end
+bill clinton,D,1993-01-20,2001-01-20
+george w. bush,R,2001-01-20,2009-01-20
+barack obama,D,2009-01-20,2017-01-20
+donald trump,R,2017-01-20,2021-01-20
+joe biden,D,2021-01-20,2025-01-20
+donald trump,R,2025-01-20,

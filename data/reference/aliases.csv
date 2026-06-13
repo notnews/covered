@@ -1,0 +1,22 @@
+# Curated alias overrides for the high-frequency head, which dominates the HHI.
+# `surface` is matched AFTER normalization (titles/party-tags already stripped,
+# lower-cased). Mapping a bare surname to a canonical individual is a deliberate
+# curated decision for figures who overwhelmingly dominate their surname in this
+# corpus (e.g. bare "obama" -> Barack, not Michelle); revisit per-era if needed.
+surface,canonical_id
+biden,joe biden
+joe biden,joe biden
+obama,barack obama
+barack obama,barack obama
+trump,donald trump
+donald trump,donald trump
+george w. bush,george w. bush
+george bush,george w. bush
+bush,george w. bush
+hillary clinton,hillary clinton
+mccain,john mccain
+john mccain,john mccain
+wolf blitzer,wolf blitzer
+blitzer,wolf blitzer
+anderson cooper,anderson cooper
+cooper,anderson cooper

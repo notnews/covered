@@ -1,0 +1,41 @@
+# Reporting / attribution cue verbs (spaCy lemmas, lower-case). A PERSON or ORG
+# that is the subject of one of these verbs is treated as a quoted/paraphrased
+# source. One lemma per line; '#' comments and blank lines ignored.
+say
+tell
+state
+add
+note
+remark
+ask
+reply
+write
+tweet
+post
+argue
+claim
+insist
+warn
+acknowledge
+deny
+contend
+assert
+suggest
+concede
+allege
+announce
+explain
+report
+accuse
+urge
+vow
+predict
+recall
+complain
+respond
+confirm
+describe
+declare
+testify
+maintain
+admit
