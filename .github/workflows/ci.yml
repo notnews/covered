@@ -20,6 +20,10 @@ jobs:
     with:
       wheel-import: covered
       coverage-floor: 0
+      # spacy 3.8.14's PyPI classifiers claim 3.14 support, but it ships no
+      # cp314 wheel (or sdist) yet -- requires-python caps at <3.14 for real,
+      # so override canon's default ["3.11", "3.14"] matrix accordingly.
+      python-versions: '["3.11", "3.12", "3.13"]'
       # TODO(pydoclint): re-enable once pydoclint's docstring_parser_fork pin
       # and anthropic's docstring-parser (llm extra) stop colliding on the
       # `docstring_parser` import namespace when `uv sync --all-groups

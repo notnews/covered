@@ -3,7 +3,7 @@ name = "covered"
 dynamic = ["version"]
 description = "HHI of quote attribution and on-air source concentration in CNN transcripts, 2000-2025"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11,<3.14"
 license = "MIT"
 authors = [{ name = "Gaurav Sood", email = "gsood07@gmail.com" }]
 keywords = [
