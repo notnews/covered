@@ -138,7 +138,9 @@ def resolve_mentions(
             continue
         # bare surname: look at full candidates sharing the block and surname
         candidates = {
-            full for full in full_by_block.get(block_key(norm), set()) if _surname(full) == norm
+            full
+            for full in full_by_block.get(block_key(norm), set())
+            if _surname(full) == norm
         }
         if len(candidates) == 1:
             out.append(next(iter(candidates)))

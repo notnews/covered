@@ -45,6 +45,9 @@ CORPUS_END = date(2025, 3, 15)
 ERA_STARTS: tuple[tuple[str, date], ...] = (
     ("era1", date(2000, 1, 1)),  # old h2/h3/h4 markup (cnn-1..cnn-4)
     ("era2", date(2002, 9, 17)),  # cnnBodyText CSS classes (cnn-5..cnn-6)
-    ("era3", date(2014, 6, 18)),  # modern /show/<code>/date/.../segment slug (cnn-7..cnn-8)
+    (
+        "era3",
+        date(2014, 6, 18),
+    ),  # modern /show/<code>/date/.../segment slug (cnn-7..cnn-8)
 )
 ERA_IDS: tuple[str, ...] = tuple(eid for eid, _ in ERA_STARTS)

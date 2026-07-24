@@ -1,5 +1,4 @@
-"""Orchestration: turn raw transcript frames into the long, provenance-rich
-extraction tables and the annual HHI series.
+"""Orchestration: turn raw transcript frames into extraction tables and HHI series.
 
 Every emitted row carries provenance (uid/url/show_code/host/dateline/headline/
 subhead/offsets) so any HHI count can be traced back to its source segment.
@@ -44,13 +43,17 @@ _PROV_COLS = (
 
 
 def _prov_dict(row: pd.Series, show_map: dict[str, str]) -> dict[str, object]:
-    p = parse_provenance({str(k): v for k, v in row.to_dict().items()}, show_map=show_map)
+    p = parse_provenance(
+        {str(k): v for k, v in row.to_dict().items()}, show_map=show_map
+    )
     d: dict[str, object] = {c: getattr(p, c) for c in _PROV_COLS}
     d["year"] = p.air_date.year if p.air_date else None
     return d
 
 
-def build_turns(df: pd.DataFrame, show_map: dict[str, str] | None = None) -> pd.DataFrame:
+def build_turns(
+    df: pd.DataFrame, show_map: dict[str, str] | None = None
+) -> pd.DataFrame:
     """Measure (a): explode each segment into speaker turns with provenance."""
     show_map = load_show_map() if show_map is None else show_map
     records: list[dict[str, object]] = []
@@ -103,7 +106,9 @@ def build_attributions(
         text = str(row.get("text", "") or "")
         on_air = {
             t.name_norm
-            for t in speakers.parse_turns(text, era_id=cast("str | None", prov["era_id"]))
+            for t in speakers.parse_turns(
+                text, era_id=cast("str | None", prov["era_id"])
+            )
         }
         for a in attribution.extract_attributions(text, nlp, exclude_names=on_air):
             records.append(
@@ -138,10 +143,18 @@ def _annual(
     """Compute per-year concentration metrics from a (year, canonical_id) frame."""
     rows: list[dict[str, object]] = []
     for year, grp in df.groupby("year"):
-        counts = {str(k): float(v) for k, v in grp["canonical_id"].value_counts().to_dict().items()}
+        counts = {
+            str(k): float(v)
+            for k, v in grp["canonical_id"].value_counts().to_dict().items()
+        }
         metrics = concentration_metrics(counts)
         rows.append(
-            {"year": int(cast("int", year)), "measure": measure, "variant": variant, **metrics}
+            {
+                "year": int(cast("int", year)),
+                "measure": measure,
+                "variant": variant,
+                **metrics,
+            }
         )
     if not rows:
         cols = ["year", "measure", "variant", *concentration_metrics({}).keys()]
@@ -175,7 +188,9 @@ def annual_hhi_attributions(
     entity_type: str = "PERSON",
 ) -> pd.DataFrame:
     """Annual cited-source HHI, deduped once per (source, segment)."""
-    df = atts[(atts["entity_type"] == entity_type) & atts["canonical_id"].map(_is_named)]
+    df = atts[
+        (atts["entity_type"] == entity_type) & atts["canonical_id"].map(_is_named)
+    ]
     # dedup once per (source, segment); url is the always-unique segment key
     df = df[df["year"].notna()].drop_duplicates(["canonical_id", "url", "year"])
     variant = entity_type.lower()

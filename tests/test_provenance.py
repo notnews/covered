@@ -28,7 +28,9 @@ def test_parse_url_date_modern() -> None:
 
 
 def test_parse_url_date_missing() -> None:
-    assert prov.parse_url_date("http://transcripts.cnn.com/TRANSCRIPTS/index.html") is None
+    assert (
+        prov.parse_url_date("http://transcripts.cnn.com/TRANSCRIPTS/index.html") is None
+    )
 
 
 def test_parse_provenance_full_row() -> None:

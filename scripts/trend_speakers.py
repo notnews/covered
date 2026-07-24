@@ -27,7 +27,9 @@ from covered.hhi import concentration_metrics
 TOP_N = 15  # named sources kept per (year, mode)
 # Office buckets that make up the (US-leaning) executive branch rollup. "president"
 # also catches foreign heads of state, so the clean US figure is president_share.
-_EXECUTIVE = frozenset({"president", "vice_president", "cabinet_secretary", "press_secretary"})
+_EXECUTIVE = frozenset(
+    {"president", "vice_president", "cabinet_secretary", "press_secretary"}
+)
 
 # key: (year, mode, canonical_id, is_president, office, party) -> turn count
 Key = tuple[int, str, str, bool, str, str]
@@ -39,15 +41,27 @@ def is_named(cid: object) -> bool:
 
 def _accumulate() -> dict[Key, int]:
     agg: dict[Key, int] = defaultdict(int)
-    cols = ["year", "staff_flag", "source_mode", "canonical_id", "is_president", "office", "party"]
+    cols = [
+        "year",
+        "staff_flag",
+        "source_mode",
+        "canonical_id",
+        "is_president",
+        "office",
+        "party",
+    ]
     for p in acquire.raw_files():
         n = 0
         for chunk in pd.read_csv(p, dtype=str, keep_default_na=False, chunksize=20000):
             chunk = schema.validate_csv(chunk)
             turns = pipeline.build_turns(chunk)
             if not turns.empty:
-                sub = turns[turns["staff_flag"] == "guest"][cols].dropna(subset=["year"])
-                grouped = sub.groupby(["year", "source_mode", *cols[3:]], dropna=False).size()
+                sub = turns[turns["staff_flag"] == "guest"][cols].dropna(
+                    subset=["year"]
+                )
+                grouped = sub.groupby(
+                    ["year", "source_mode", *cols[3:]], dropna=False
+                ).size()
                 for key, cnt in grouped.items():
                     y, mode, cid, isp, office, party = cast(
                         "tuple[int, str, str, bool, str, str | None]", key
@@ -95,7 +109,11 @@ def main() -> None:
                 continue
 
             hhi_rows.append(
-                {"year": y, "variant": f"external-{mode}", **concentration_metrics(names)}
+                {
+                    "year": y,
+                    "variant": f"external-{mode}",
+                    **concentration_metrics(names),
+                }
             )
             pres_rows.append(
                 {
@@ -125,7 +143,11 @@ def main() -> None:
                     "n_guest_turns": total,
                     "office_coverage": 1 - office_ct.get("", 0) / total,
                     "executive_share": exec_turns / total,
-                    **{f"{o}_share": office_ct.get(o, 0) / total for o in sorted(office_ct) if o},
+                    **{
+                        f"{o}_share": office_ct.get(o, 0) / total
+                        for o in sorted(office_ct)
+                        if o
+                    },
                 }
             )
             party_rows.append(
@@ -142,7 +164,9 @@ def main() -> None:
 
     # rank within each (mode, year) for the top-sources table
     top = pd.DataFrame(top_rows)
-    top["rank"] = top.groupby(["mode", "year"])["n_turns"].rank(ascending=False, method="first")
+    top["rank"] = top.groupby(["mode", "year"])["n_turns"].rank(
+        ascending=False, method="first"
+    )
     top["rank"] = top["rank"].astype(int)
 
     TABLES.mkdir(parents=True, exist_ok=True)

@@ -96,7 +96,9 @@ def test_clip_vs_live_tagging() -> None:
     turns = speakers.parse_turns(text, era_id="era3")
     mode = {t.speaker_raw: t.source_mode for t in turns}
     assert mode["WOLF BLITZER"] == "live"
-    assert mode["DONALD TRUMP"] == "clip"  # inside (BEGIN VIDEO CLIP)...(END VIDEO CLIP)
+    assert (
+        mode["DONALD TRUMP"] == "clip"
+    )  # inside (BEGIN VIDEO CLIP)...(END VIDEO CLIP)
     assert turns[-1].source_mode == "live"  # back to anchor after END
 
 

@@ -11,7 +11,10 @@ from covered import roles
     ("role", "expected"),
     [
         ("PRESIDENT OF THE UNITED STATES", "president"),
-        ("VICE PRESIDENT OF THE UNITED STATES", "vice_president"),  # specific beats "president"
+        (
+            "VICE PRESIDENT OF THE UNITED STATES",
+            "vice_president",
+        ),  # specific beats "president"
         ("WHITE HOUSE PRESS SECRETARY", "press_secretary"),  # beats "secretary of"
         ("U.S. SECRETARY OF STATE", "cabinet_secretary"),
         ("U.S. SENATE MEMBER", "senator"),

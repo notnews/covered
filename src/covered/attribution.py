@@ -66,7 +66,10 @@ def _build_matcher(nlp: Language):  # type: ignore[no-untyped-def]
             [
                 {
                     "RIGHT_ID": "cue",
-                    "RIGHT_ATTRS": {"POS": "VERB", "LEMMA": {"IN": list(_cue_lemmas())}},
+                    "RIGHT_ATTRS": {
+                        "POS": "VERB",
+                        "LEMMA": {"IN": list(_cue_lemmas())},
+                    },
                 },
                 {
                     "LEFT_ID": "cue",
@@ -81,14 +84,22 @@ def _build_matcher(nlp: Language):  # type: ignore[no-untyped-def]
         "according_to",
         [
             [
-                {"RIGHT_ID": "accord", "RIGHT_ATTRS": {"LEMMA": "accord", "DEP": "prep"}},
+                {
+                    "RIGHT_ID": "accord",
+                    "RIGHT_ATTRS": {"LEMMA": "accord", "DEP": "prep"},
+                },
                 {
                     "LEFT_ID": "accord",
                     "REL_OP": ">",
                     "RIGHT_ID": "to",
                     "RIGHT_ATTRS": {"LOWER": "to"},
                 },
-                {"LEFT_ID": "to", "REL_OP": ">", "RIGHT_ID": "src", "RIGHT_ATTRS": {"DEP": "pobj"}},
+                {
+                    "LEFT_ID": "to",
+                    "REL_OP": ">",
+                    "RIGHT_ID": "src",
+                    "RIGHT_ATTRS": {"DEP": "pobj"},
+                },
             ]
         ],
     )

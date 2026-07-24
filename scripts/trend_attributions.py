@@ -42,7 +42,10 @@ def main() -> None:
         print(f"[{p.name}] scanned {n:,}", flush=True)
 
     sample = pd.DataFrame([r for rows in res.values() for r in rows])
-    print(f"sampled {len(sample):,} segments across {sample['year'].nunique()} years", flush=True)
+    print(
+        f"sampled {len(sample):,} segments across {sample['year'].nunique()} years",
+        flush=True,
+    )
 
     nlp = ner.load_nlp("en_core_web_sm")
     atts = pipeline.build_attributions(sample, nlp)

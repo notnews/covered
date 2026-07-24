@@ -19,7 +19,9 @@ def era_for_date(day: date) -> str:
     Raises ``ValueError`` for dates before the corpus start (2000-01-01).
     """
     if day < CORPUS_START:
-        raise ValueError(f"{day.isoformat()} is before the corpus start {CORPUS_START.isoformat()}")
+        raise ValueError(
+            f"{day.isoformat()} is before the corpus start {CORPUS_START.isoformat()}"
+        )
     era = ERA_STARTS[0][0]
     for era_id, start in ERA_STARTS:
         if day >= start:

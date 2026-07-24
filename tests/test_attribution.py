@@ -20,7 +20,9 @@ def _sources(atts: list[attribution.Attribution]) -> list[str]:
 
 
 def test_subject_cue_person(nlp) -> None:  # type: ignore[no-untyped-def]
-    atts = attribution.extract_attributions("Joe Biden said the economy is strong.", nlp)
+    atts = attribution.extract_attributions(
+        "Joe Biden said the economy is strong.", nlp
+    )
     assert any("biden" in s for s in _sources(atts))
     hit = next(a for a in atts if "biden" in a.source_span.lower())
     assert hit.entity_type == "PERSON"
@@ -33,14 +35,18 @@ def test_inverted_attribution(nlp) -> None:  # type: ignore[no-untyped-def]
 
 
 def test_according_to(nlp) -> None:  # type: ignore[no-untyped-def]
-    atts = attribution.extract_attributions("According to Barack Obama, the plan worked.", nlp)
+    atts = attribution.extract_attributions(
+        "According to Barack Obama, the plan worked.", nlp
+    )
     hit = next(a for a in atts if "obama" in a.source_span.lower())
     assert hit.cue_verb == "according to"
     assert hit.pattern_id == "according_to"
 
 
 def test_org_source_typed(nlp) -> None:  # type: ignore[no-untyped-def]
-    atts = attribution.extract_attributions("The White House said it would respond.", nlp)
+    atts = attribution.extract_attributions(
+        "The White House said it would respond.", nlp
+    )
     hit = next(a for a in atts if "white house" in a.source_span.lower())
     assert hit.entity_type == "ORG"
 

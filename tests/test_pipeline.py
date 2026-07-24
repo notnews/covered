@@ -66,7 +66,9 @@ def test_build_turns_has_provenance_and_flags(nlp) -> None:  # type: ignore[no-u
     turns = pipeline.build_turns(_corpus())
     assert len(turns) == 4
     # provenance is carried on every row
-    assert {"uid", "url", "show_code", "year", "era_id", "staff_flag"} <= set(turns.columns)
+    assert {"uid", "url", "show_code", "year", "era_id", "staff_flag"} <= set(
+        turns.columns
+    )
     assert set(turns["show_code"]) == {"acd"}
     guests = turns[turns["staff_flag"] == "guest"]
     assert len(guests) == 2  # Jane Doe, John Smith

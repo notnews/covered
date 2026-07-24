@@ -38,7 +38,12 @@ __all__ = [
 _PARTY_ABBR = re.compile(r"(?:^|[\s(])([rdi])-[a-z]{2,}", re.IGNORECASE)
 
 # Lower-confidence fallback: a bare party word anywhere in the role.
-_PARTY_WORDS = (("republican", "R"), ("democratic", "D"), ("democrat", "D"), ("independent", "I"))
+_PARTY_WORDS = (
+    ("republican", "R"),
+    ("democratic", "D"),
+    ("democrat", "D"),
+    ("independent", "I"),
+)
 
 
 @functools.lru_cache(maxsize=1)

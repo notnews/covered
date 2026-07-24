@@ -68,7 +68,9 @@ def simulate_hhi_ci(
 
     for d in range(n_draws):
         kept = rng.binomial(obs.astype(int), precision) if precision < 1 else obs
-        added = rng.poisson(kept * add_factor) if add_factor > 0 else np.zeros_like(kept)
+        added = (
+            rng.poisson(kept * add_factor) if add_factor > 0 else np.zeros_like(kept)
+        )
         new = np.asarray(kept, dtype=float) + np.asarray(added, dtype=float)
         draws[d] = hhi(new)
 

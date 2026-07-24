@@ -71,7 +71,9 @@ def annotate_segment(
     the rule-based extraction in :mod:`covered.metrics`.
     """
     if task not in TASK_RUBRICS:
-        raise ValueError(f"unknown task {task!r}; expected one of {sorted(TASK_RUBRICS)}")
+        raise ValueError(
+            f"unknown task {task!r}; expected one of {sorted(TASK_RUBRICS)}"
+        )
     import anthropic  # lazy: optional dependency, needs an API key at call time
 
     anthropic_client = client or anthropic.Anthropic()

@@ -23,6 +23,8 @@ def test_face_validity_passes_when_president_dominates() -> None:
 
 
 def test_face_validity_raises_on_miss() -> None:
-    atts = _atts(["random a", "random b", "random c", "random d", "random e", "random f"])
+    atts = _atts(
+        ["random a", "random b", "random c", "random d", "random e", "random f"]
+    )
     with pytest.raises(AssertionError, match="face-validity failure"):
         cli.check_face_validity(atts)

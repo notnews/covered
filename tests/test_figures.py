@@ -18,13 +18,17 @@ def test_plot_hhi_series_writes_file(tmp_path: Path) -> None:
         }
     )
     out = figures.plot_hhi_series(annual, tmp_path / "hhi.png")
-    assert out.exists() and out.stat().st_size > 0
+    assert out.exists()
+    assert out.stat().st_size > 0
 
 
 def test_plot_coverage_writes_file(tmp_path: Path) -> None:
-    coverage = pd.DataFrame({"year": [2000, 2001, 2002], "n_segments": [7000, 21000, 35000]})
+    coverage = pd.DataFrame(
+        {"year": [2000, 2001, 2002], "n_segments": [7000, 21000, 35000]}
+    )
     out = figures.plot_coverage(coverage, tmp_path / "coverage.png")
-    assert out.exists() and out.stat().st_size > 0
+    assert out.exists()
+    assert out.stat().st_size > 0
 
 
 def _modes_fixture() -> pd.DataFrame:
@@ -43,22 +47,27 @@ def _modes_fixture() -> pd.DataFrame:
 
 def test_plot_topk_bands_writes_file(tmp_path: Path) -> None:
     out = figures.plot_topk_bands(_modes_fixture(), tmp_path / "bands.png")
-    assert out.exists() and out.stat().st_size > 0
+    assert out.exists()
+    assert out.stat().st_size > 0
 
 
 def test_plot_topk_bands_unknown_variant_raises() -> None:
     with pytest.raises(ValueError, match="no rows for variant"):
-        figures.plot_topk_bands(_modes_fixture(), Path("unused.png"), variant="external-nope")
+        figures.plot_topk_bands(
+            _modes_fixture(), Path("unused.png"), variant="external-nope"
+        )
 
 
 def test_plot_effective_voices_writes_file(tmp_path: Path) -> None:
     out = figures.plot_effective_voices(_modes_fixture(), tmp_path / "voices.png")
-    assert out.exists() and out.stat().st_size > 0
+    assert out.exists()
+    assert out.stat().st_size > 0
 
 
 def test_plot_clip_share_writes_file(tmp_path: Path) -> None:
     out = figures.plot_clip_share(_modes_fixture(), tmp_path / "clip_share.png")
-    assert out.exists() and out.stat().st_size > 0
+    assert out.exists()
+    assert out.stat().st_size > 0
 
 
 def test_plot_president_share_writes_file(tmp_path: Path) -> None:
@@ -66,17 +75,28 @@ def test_plot_president_share_writes_file(tmp_path: Path) -> None:
         {
             "year": [2016, 2017, 2018, 2019],
             "mode": ["clip"] * 4,
-            "president_id": ["barack obama", "donald trump", "donald trump", "donald trump"],
+            "president_id": [
+                "barack obama",
+                "donald trump",
+                "donald trump",
+                "donald trump",
+            ],
             "president_share": [0.04, 0.11, 0.10, 0.09],
         }
     )
     out = figures.plot_president_share(pres, tmp_path / "pres.png")
-    assert out.exists() and out.stat().st_size > 0
+    assert out.exists()
+    assert out.stat().st_size > 0
 
 
 def test_plot_president_share_unknown_mode_raises() -> None:
     pres = pd.DataFrame(
-        {"year": [2017], "mode": ["clip"], "president_id": ["x"], "president_share": [0.1]}
+        {
+            "year": [2017],
+            "mode": ["clip"],
+            "president_id": ["x"],
+            "president_share": [0.1],
+        }
     )
     with pytest.raises(ValueError, match="no rows for mode"):
         figures.plot_president_share(pres, Path("unused.png"), mode="live")

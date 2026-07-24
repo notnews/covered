@@ -38,6 +38,8 @@ def test_simulate_hhi_no_error_is_deterministic() -> None:
 def test_simulate_hhi_with_error_brackets_and_orders() -> None:
     counts = {f"s{i}": 1 for i in range(20)}
     counts["dominant"] = 80
-    res = metrics.simulate_hhi_ci(counts, recall=0.7, precision=0.9, n_draws=200, seed=3)
+    res = metrics.simulate_hhi_ci(
+        counts, recall=0.7, precision=0.9, n_draws=200, seed=3
+    )
     assert res["lo"] <= res["median"] <= res["hi"]
     assert not math.isnan(res["median"])

@@ -67,7 +67,10 @@ def list_dataset_files(version: str = DATAVERSE_VERSION) -> list[dict[str, objec
     """Return ``[{file_id, filename, md5}]`` for the pinned dataset version."""
     native, _ = _apis()
     resp = native.get_dataset(DATAVERSE_DOI, version=version)
-    data = resp.json()["data"]
+    # pyDataverse types this as sync-or-async (union on whether an async httpx
+    # client was passed to the constructor); _apis() never passes one, so this
+    # is always the sync httpx.Response branch.
+    data = resp.json()["data"]  # pyright: ignore[reportAttributeAccessIssue]
     files = data.get("latestVersion", data).get("files", data.get("files", []))
     out: list[dict[str, object]] = []
     for f in files:
@@ -97,7 +100,9 @@ def download_all(
         if target.exists() and not overwrite:
             content = target.read_bytes()
         else:
-            content = access.get_datafile(entry["file_id"]).content
+            # Same sync/async ambiguity as list_dataset_files above.
+            datafile = access.get_datafile(entry["file_id"])
+            content = datafile.content  # pyright: ignore[reportAttributeAccessIssue]
             target.write_bytes(content)
         manifest.append(
             {
@@ -133,9 +138,13 @@ def extract_archives(raw: Path = RAW) -> list[Path]:
             continue
         seven_zip = shutil.which("7z") or shutil.which("7za") or shutil.which("7zr")
         if not seven_zip:
-            raise RuntimeError("7z CLI not found; install p7zip to extract the .7z archives")
-        subprocess.run(
-            [seven_zip, "x", "-y", f"-o{raw}", str(archive)], check=True, capture_output=True
+            raise RuntimeError(
+                "7z CLI not found; install p7zip to extract the .7z archives"
+            )
+        subprocess.run(  # noqa: S603 - seven_zip is resolved via shutil.which, args are fixed
+            [seven_zip, "x", "-y", f"-o{raw}", str(archive)],
+            check=True,
+            capture_output=True,
         )
     return sorted(raw.glob("*.csv"))
 
@@ -158,7 +167,9 @@ def load_raw_frames(
     extract_archives(raw)
     paths = files if files is not None else raw_files(raw)
     if not paths:
-        raise FileNotFoundError(f"No source files in {raw}. Run `covered acquire` first.")
+        raise FileNotFoundError(
+            f"No source files in {raw}. Run `covered acquire` first."
+        )
     frames = [pd.read_csv(p, dtype=str, keep_default_na=False) for p in paths]
     df = pd.concat(frames, ignore_index=True)
     return validate_csv(df) if validate else df

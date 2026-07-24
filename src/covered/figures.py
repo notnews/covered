@@ -10,6 +10,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import matplotlib
+from matplotlib.axes import Axes
 
 matplotlib.use("Agg")  # headless: no display needed for file output
 import matplotlib.pyplot as plt
@@ -29,7 +30,7 @@ ERA_BOUNDARY_YEARS = (2002, 2014)
 PARTIAL_YEAR = 2025
 
 
-def _annotate_eras(ax: plt.Axes) -> None:
+def _annotate_eras(ax: Axes) -> None:
     for year in ERA_BOUNDARY_YEARS:
         ax.axvline(year, color="0.7", linestyle="--", linewidth=1, zorder=0)
     ax.axvspan(PARTIAL_YEAR - 0.5, PARTIAL_YEAR + 0.5, color="0.9", zorder=0)
@@ -140,10 +141,14 @@ def plot_clip_share(modes: pd.DataFrame, out_path: Path) -> Path:
     """
     live = modes[modes["variant"] == "external-live"][["year", "n_events"]]
     clip = modes[modes["variant"] == "external-clip"][["year", "n_events"]]
-    merged = live.merge(clip, on="year", suffixes=("_live", "_clip")).sort_values("year")
+    merged = live.merge(clip, on="year", suffixes=("_live", "_clip")).sort_values(
+        "year"
+    )
     if merged.empty:
         raise ValueError("no overlapping live/clip years")
-    share = merged["n_events_clip"] / (merged["n_events_clip"] + merged["n_events_live"])
+    share = merged["n_events_clip"] / (
+        merged["n_events_clip"] + merged["n_events_live"]
+    )
 
     fig, ax = plt.subplots(figsize=(9, 4))
     _annotate_eras(ax)
@@ -160,7 +165,7 @@ def plot_clip_share(modes: pd.DataFrame, out_path: Path) -> Path:
     return out_path
 
 
-def _shade_administrations(ax: plt.Axes, pres: pd.DataFrame) -> None:
+def _shade_administrations(ax: Axes, pres: pd.DataFrame) -> None:
     """Shade contiguous runs of years sharing a ``president_id`` and label them."""
     runs: list[tuple[str, int, int]] = []
     for _, r in pres.sort_values("year").iterrows():
@@ -186,7 +191,9 @@ def _shade_administrations(ax: plt.Axes, pres: pd.DataFrame) -> None:
         )
 
 
-def plot_president_share(pres: pd.DataFrame, out_path: Path, mode: str = "clip") -> Path:
+def plot_president_share(
+    pres: pd.DataFrame, out_path: Path, mode: str = "clip"
+) -> Path:
     """Share of guest turns spoken by the sitting US president, over year.
 
     ``pres`` is the ``president_share_annual.csv`` frame (columns ``year``,

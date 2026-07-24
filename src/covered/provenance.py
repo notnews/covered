@@ -99,7 +99,9 @@ def parse_url_date(url: str) -> date | None:
 
 def _air_date_from_columns(row: Mapping[str, object]) -> date | None:
     try:
-        return date(int(str(row["year"])), int(str(row["month"])), int(str(row["date"])))
+        return date(
+            int(str(row["year"])), int(str(row["month"])), int(str(row["date"]))
+        )
     except (KeyError, TypeError, ValueError):
         return None
 

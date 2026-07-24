@@ -24,14 +24,18 @@ def main() -> None:
     modes = pd.read_csv(TABLES / "hhi_speakers_modes.csv")
     FIGURES.mkdir(parents=True, exist_ok=True)
 
-    figures.plot_topk_bands(modes, FIGURES / "clip_topk_bands.png", variant="external-clip")
+    figures.plot_topk_bands(
+        modes, FIGURES / "clip_topk_bands.png", variant="external-clip"
+    )
     figures.plot_effective_voices(modes, FIGURES / "effective_voices.png")
     figures.plot_clip_share(modes, FIGURES / "clip_share.png")
     n = 3
 
     pres_path = TABLES / "president_share_annual.csv"
     if pres_path.exists():
-        figures.plot_president_share(pd.read_csv(pres_path), FIGURES / "president_share.png")
+        figures.plot_president_share(
+            pd.read_csv(pres_path), FIGURES / "president_share.png"
+        )
         n += 1
 
     print(f"wrote {n} figures -> {FIGURES}", flush=True)

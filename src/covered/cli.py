@@ -22,7 +22,9 @@ from covered.config import (
     TABLES,
 )
 
-app = typer.Typer(add_completion=False, help="HHI of who gets quoted on CNN, 2000-2025.")
+app = typer.Typer(
+    add_completion=False, help="HHI of who gets quoted on CNN, 2000-2025."
+)
 
 # Sitting US president by year — face-validity anchor for cited sources.
 PRESIDENT_BY_YEAR = {
