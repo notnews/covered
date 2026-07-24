@@ -7,4 +7,6 @@ Two separately-reported measures of "who gets quoted":
 Headline output: an annual Herfindahl-Hirschman Index (HHI) time series.
 """
 
-__version__ = "0.1.0"
+from importlib.metadata import version as _version
+
+__version__ = _version("covered")

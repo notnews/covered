@@ -2,33 +2,28 @@ name: CI
 
 on:
   push:
+    branches: [main]
   pull_request:
+  schedule:
+    - cron: "17 6 * * 1"  # weekly: surface ecosystem drift on quiet repos
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-        with:
-          enable-cache: true
-
-      - name: Create environment
-        run: |
-          uv venv --python 3.12
-          uv pip install -e ".[dev,llm]"
-          uv run python -m spacy download en_core_web_sm
-
-      - name: Lint
-        run: uv run ruff check src tests
-
-      - name: Format check
-        run: uv run ruff format --check src tests
-
-      - name: Type check
-        run: uv run mypy
-
-      - name: Test
-        run: uv run pytest
+  ci:
+    uses: gojiplus/py-canon/.github/workflows/reusable-ci.yml@v1
+    with:
+      wheel-import: covered
+      coverage-floor: 0
+      # TODO(pydoclint): re-enable once pydoclint's docstring_parser_fork pin
+      # and anthropic's docstring-parser (llm extra) stop colliding on the
+      # `docstring_parser` import namespace when `uv sync --all-groups
+      # --all-extras` installs both into one venv. `pydoclint src/` itself
+      # reports zero violations in isolation (verified 2026-07-24) -- this is
+      # a packaging conflict, not a lint failure.
+      run-pydoclint: false

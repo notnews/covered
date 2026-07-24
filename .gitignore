@@ -11,6 +11,6 @@ outputs/figures/
 .pytest_cache/
 **/__pycache__/
 *.egg-info/
-uv.lock
+dist/
 .env
 .DS_Store

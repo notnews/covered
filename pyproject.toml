@@ -1,10 +1,10 @@
 [project]
 name = "covered"
-version = "0.1.0"
+dynamic = ["version"]
 description = "HHI of quote attribution and on-air source concentration in CNN transcripts, 2000-2025"
 readme = "README.md"
-requires-python = ">=3.11,<3.13"
-license = { text = "MIT" }
+requires-python = ">=3.11"
+license = "MIT"
 authors = [{ name = "Gaurav Sood", email = "gsood07@gmail.com" }]
 keywords = [
     "media",
@@ -28,48 +28,40 @@ dependencies = [
     "typer>=0.12",
     "click>=8.1",
 ]
+license-files = ["LICENSE"]
 
 [project.optional-dependencies]
 llm = ["anthropic>=0.40"]
-dev = [
-    "pytest>=8.0",
-    "pytest-cov>=5.0",
-    "ruff>=0.6",
-    "mypy>=1.11",
-    "pandas-stubs",
-    "pre-commit>=3.7",
-]
 
 [project.scripts]
 covered = "covered.cli:app"
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/covered"]
 
 [tool.ruff]
-line-length = 100
+line-length = 88
 target-version = "py311"
-src = ["src", "tests"]
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "W", "UP", "B", "C4", "SIM", "RUF"]
-ignore = ["E501"]
+external = ["DOC"]
+select = ["E", "W", "F", "I", "B", "C4", "UP", "N", "D", "S", "SIM", "T20", "PT", "RUF"]
+ignore = ["D203", "D213", "E501"]
 
-[tool.ruff.lint.isort]
-known-first-party = ["covered"]
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
-[tool.mypy]
-python_version = "3.11"
-packages = ["covered"]
-mypy_path = "src"
-warn_unused_ignores = true
-warn_redundant_casts = true
-disallow_untyped_defs = true
-ignore_missing_imports = true
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "D"]
+"docs/**" = ["D"]
+"scripts/**" = ["D", "T20", "S311"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -79,3 +71,45 @@ pythonpath = ["src"]
 [tool.coverage.run]
 source = ["covered"]
 branch = true
+
+[tool.pyright]
+include = ["src"]
+typeCheckingMode = "standard"
+
+[tool.pydoclint]
+style = "google"
+arg-type-hints-in-docstring = false
+check-return-types = false
+check-class-attributes = false
+allow-init-docstring = true
+exclude = '\.venv|tests|docs'
+
+[tool.codespell]
+# "pres" is the `president_share_annual.csv` dataframe abbreviation used
+# throughout figures.py/roles.py, not a typo of "press".
+ignore-words-list = "pres"
+# All *.csv files here are reference lookups or generated data tables
+# containing real transcript-derived proper nouns, not prose -- skip them.
+skip = "*.csv,uv.lock"
+
+[dependency-groups]
+docs = ["sphinx>=8", "furo", "myst-parser", "sphinx-copybutton", "py-canon @ git+https://github.com/gojiplus/py-canon@v1"]
+# Everything actually needed to run the test suite (canon's wheel-smoke-test
+# job installs only this group, not `dev`, against a built wheel).
+test = [
+    "pytest>=8",
+    "pytest-cov>=5",
+    # Tests load this spacy model by name; declaring it as a normal
+    # URL-pinned dependency lets `uv sync`/`uv pip install --group test`
+    # install it (canon's reusable CI has no hook for an imperative
+    # `spacy download` step).
+    "en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl",
+]
+dev = [
+    "ruff>=0.14",
+    "pyright>=1.1.390",
+    "pydoclint>=0.5",
+    "pre-commit>=3.7",
+    "pandas-stubs",
+    { include-group = "test" },
+]
