@@ -135,7 +135,7 @@ def _valid_boundary(text: str, start: int) -> bool:
 
 
 def parse_turns(text: str, era_id: str | None = None) -> list[Turn]:
-    """Split ``text`` into ordered :class:`Turn`s.
+    """Split ``text`` into ordered :class:`Turn` objects.
 
     ``era_id`` is accepted for forward-compatibility with era-specific tweaks;
     the boundary logic already handles both newline-delimited (old) and
