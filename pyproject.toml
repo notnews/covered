@@ -16,7 +16,7 @@ keywords = [
 ]
 dependencies = [
     "pandas>=2.1",
-    "pyarrow>=14",
+    "pyarrow>=25.0.0",
     "pandera>=0.32.1",
     "pyDataverse>=0.3.5",
     "spacy>=3.7,<3.9",
