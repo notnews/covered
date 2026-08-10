@@ -104,6 +104,10 @@ test = [
     # install it (canon's reusable CI has no hook for an imperative
     # `spacy download` step).
     "en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl",
+    # The Monte Carlo gates behind tests/test_metrics_coverage.py. A git
+    # reference, so it stays in dependency-groups and out of the published
+    # extras: PyPI rejects direct URL references in published metadata.
+    "simcheck @ git+https://github.com/finite-sample/simcheck",
 ]
 dev = [
     "ruff>=0.14",
