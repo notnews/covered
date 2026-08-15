@@ -309,6 +309,39 @@ def test_a_former_participant_is_no_longer_a_participant() -> None:
     assert _label("FORMER LEAD PROSECUTOR").epistemic_role != "participant"
 
 
+# --- the frozen dictionary tier ---------------------------------------------
+
+
+def test_dictionary_is_optional_and_absent_is_not_an_error() -> None:
+    # The pipeline must run deterministically without the enrichment file, and
+    # without an API key.
+    assert isinstance(taxonomy._role_dictionary(), dict)
+
+
+def test_dictionary_only_fires_where_every_rule_declined(tmp_path, monkeypatch) -> None:
+    import csv as _csv
+
+    ref = tmp_path
+    with (ref / "role_dictionary.csv").open("w", newline="", encoding="utf-8") as fh:
+        w = _csv.writer(fh)
+        w.writerow(["role_raw", "sector", "epistemic_role"])
+        # one role no rule reaches, and one that the keyword lexicon already owns
+        w.writerow(["haleigh's baby-sitter", "private_individual", "eyewitness"])
+        w.writerow(["defense attorney", "business", "principal"])
+    monkeypatch.setattr(taxonomy, "REFERENCE", ref)
+    taxonomy._role_dictionary.cache_clear()
+    try:
+        tail = taxonomy.classify("HALEIGH'S BABY-SITTER")
+        assert (tail.sector, tail.sector_source) == ("private_individual", "dictionary")
+
+        # the keyword lexicon wins; the dictionary's contrary label is ignored
+        owned = taxonomy.classify("DEFENSE ATTORNEY")
+        assert owned.sector == "judicial_legal"
+        assert owned.sector_source == "role"
+    finally:
+        taxonomy._role_dictionary.cache_clear()
+
+
 def test_sector_defaults_cover_every_sector() -> None:
     # classify() falls back on this map, so a missing key would silently yield
     # "unresolved" for a sector that is otherwise perfectly well identified.

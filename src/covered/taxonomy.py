@@ -326,6 +326,41 @@ def _epistemic_lexicon() -> tuple[tuple[str, str], ...]:
 
 
 @functools.lru_cache(maxsize=1)
+def _role_dictionary() -> dict[str, tuple[str, str]]:
+    """Frozen per-string labels for roles no rule reaches.
+
+    The keyword lexicons generalise; a long tail of role strings does not --
+    ``PRINCESS DIANA'S LOVER 1986-91``, ``DIRECTOR EMERITUS, COLUMBUS ZOO``.
+    Those are labelled once, offline, by an LLM working from the same codebook
+    (``scripts/label_roles_llm.py``), and the result is committed here and
+    applied by exact match.
+
+    Three properties make this safe to use in a measurement:
+
+    * the model never runs in the production path -- the committed CSV does, so
+      the pipeline stays deterministic and reproducible without an API key;
+    * it is consulted only where the keyword rules yield nothing, so the
+      auditable layer always wins;
+    * labels from it are tagged ``dictionary``, so every table can report what
+      the tier contributed and validation can score it separately.
+
+    Missing file is not an error: the dictionary is an optional enrichment.
+    """
+    path = REFERENCE / "role_dictionary.csv"
+    if not path.exists():
+        return {}
+    out: dict[str, tuple[str, str]] = {}
+    with path.open(newline="", encoding="utf-8") as fh:
+        for row in csv.DictReader(line for line in fh if not line.startswith("#")):
+            key = (row.get("role_raw") or "").strip().lower()
+            sector = (row.get("sector") or "").strip().lower()
+            role = (row.get("epistemic_role") or "").strip().lower()
+            if key and sector in SECTORS:
+                out[key] = (sector, role if role in EPISTEMIC_ROLES else "")
+    return out
+
+
+@functools.lru_cache(maxsize=1)
 def _outlets() -> frozenset[str]:
     """Curated news outlets, matched as a whole role clause."""
     path = REFERENCE / "news_outlets.txt"
@@ -495,6 +530,14 @@ def classify(role_raw: str | None, name: str | None = None) -> SourceLabel:
                 low,
                 "party_state",
             )
+        else:
+            # Last resort: the frozen per-string dictionary, for role strings no
+            # rule generalises to. Reached only when every rule above declined.
+            hit = _role_dictionary().get(low)
+            if hit:
+                sector, sector_rule, sector_source = hit[0], low, "dictionary"
+                if not epistemic_role and hit[1]:
+                    epistemic_role, epistemic_source = hit[1], "dictionary"
     sector = sector or "unknown"
     if not epistemic_role:
         epistemic_role = SECTOR_DEFAULT_ROLE.get(sector, "unresolved")
