@@ -314,7 +314,8 @@ def refresh(names: list[str], *, session=None) -> int:
             "# check qid/label actually name the person meant. A gender_qid that\n"
             "# is neither Q6581097 nor Q6581072 is recorded, not coerced.\n"
         )
-        writer = csv.DictWriter(fh, fieldnames=_FIELDS)
+        # csv defaults to CRLF; this file is committed and diffed by humans.
+        writer = csv.DictWriter(fh, fieldnames=_FIELDS, lineterminator="\n")
         writer.writeheader()
         for key in sorted(existing):
             person = existing[key]
