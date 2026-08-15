@@ -46,6 +46,16 @@ source = "vcs"
 [tool.hatch.build.targets.wheel]
 packages = ["src/covered"]
 
+# The reference lexicons live at data/reference/ because this is an analysis
+# repo, where data/ and outputs/ are siblings of src/. That is fine for a
+# checkout and wrong for an install: ../sourcerer imports covered.taxonomy as a
+# library, and a wheel built from packages= alone ships classify() with no
+# lexicons to load -- it would return "unknown" for everything rather than
+# fail loudly. Ship them inside the package as well; config.REFERENCE prefers
+# the checkout copy and falls back to this one.
+[tool.hatch.build.targets.wheel.force-include]
+"data/reference" = "covered/data/reference"
+
 [tool.ruff]
 line-length = 88
 target-version = "py311"

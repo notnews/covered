@@ -17,6 +17,12 @@ RAW = DATA / "raw"
 INTERIM = DATA / "interim"
 PROCESSED = DATA / "processed"
 REFERENCE = DATA / "reference"
+if not REFERENCE.is_dir():
+    # Installed as a wheel rather than checked out, so ANALYSIS_ROOT points into
+    # site-packages and data/ is not there. The lexicons are force-included in
+    # the package for exactly this case (see pyproject.toml), because
+    # ../sourcerer imports taxonomy.classify as a library.
+    REFERENCE = PACKAGE_ROOT / "data" / "reference"
 VALIDATION = DATA / "validation"
 OUTPUTS = ANALYSIS_ROOT / "outputs"
 FIGURES = OUTPUTS / "figures"
