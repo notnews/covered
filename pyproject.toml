@@ -117,3 +117,17 @@ dev = [
     "pandas-stubs",
     { include-group = "test" },
 ]
+
+[tool.preen]
+# The standard says no upper bound on requires-python, and preen's `metadata`
+# check enforces that. This repo has to differ: spacy ships no cp314 wheel and
+# no sdist at all, so `<3.14` is not caution, it is the truth about what can be
+# installed.
+#
+#   $ curl -s https://pypi.org/pypi/spacy/3.8.15/json | jq '[.urls[].filename]'
+#   wheel ABI tags: cp310, cp311, cp312, cp313      sdist present: false
+#
+# Confirmed by trying it: `uv run --python 3.14 pytest` fails at install with
+# "spacy (v3.8.15) only has wheels with the following Python ABI tags: cp311,
+# cp312, cp313". Drop this skip and the bound together, once spacy ships cp314.
+skip_checks = ["metadata"]
