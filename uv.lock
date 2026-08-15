@@ -408,15 +408,18 @@ dependencies = [
     { name = "click" },
     { name = "matplotlib" },
     { name = "metaphone" },
+    { name = "nomquamgender" },
     { name = "numpy" },
     { name = "pandas" },
     { name = "pandera" },
     { name = "pyarrow" },
     { name = "pydataverse" },
     { name = "rapidfuzz" },
+    { name = "requests" },
     { name = "scipy" },
     { name = "spacy" },
     { name = "typer" },
+    { name = "unidecode" },
 ]
 
 [package.optional-dependencies]
@@ -443,6 +446,9 @@ docs = [
     { name = "sphinx", version = "9.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
     { name = "sphinx-copybutton" },
 ]
+ner = [
+    { name = "en-core-web-lg" },
+]
 test = [
     { name = "en-core-web-sm" },
     { name = "pytest" },
@@ -455,15 +461,18 @@ requires-dist = [
     { name = "click", specifier = ">=8.1" },
     { name = "matplotlib", specifier = ">=3.8" },
     { name = "metaphone", specifier = ">=0.6" },
+    { name = "nomquamgender", specifier = ">=0.1.4" },
     { name = "numpy", specifier = ">=1.26" },
     { name = "pandas", specifier = ">=2.1" },
     { name = "pandera", specifier = ">=0.32.1" },
     { name = "pyarrow", specifier = ">=14" },
     { name = "pydataverse", specifier = ">=0.3.5" },
     { name = "rapidfuzz", specifier = ">=3.14.5" },
+    { name = "requests", specifier = ">=2.31" },
     { name = "scipy", specifier = ">=1.17.1" },
     { name = "spacy", specifier = ">=3.7,<3.9" },
     { name = "typer", specifier = ">=0.27.0" },
+    { name = "unidecode", specifier = ">=1.3" },
 ]
 provides-extras = ["llm"]
 
@@ -485,6 +494,7 @@ docs = [
     { name = "sphinx", specifier = ">=8" },
     { name = "sphinx-copybutton" },
 ]
+ner = [{ name = "en-core-web-lg", url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl" }]
 test = [
     { name = "en-core-web-sm", url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl" },
     { name = "pytest", specifier = ">=8" },
@@ -583,6 +593,14 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/ae/b6/03bb70946330e88ffec97aefd3ea75ba575cb2e762061e0e62a213befee8/docutils-0.22.4.tar.gz", hash = "sha256:4db53b1fde9abecbb74d91230d32ab626d94f6badfc575d6db9194a49df29968", size = 2291750, upload-time = "2025-12-18T19:00:26.443Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/02/10/5da547df7a391dcde17f59520a231527b8571e6f46fc8efb02ccb370ab12/docutils-0.22.4-py3-none-any.whl", hash = "sha256:d0013f540772d1420576855455d050a2180186c91c15779301ac2ccb3eeb68de", size = 633196, upload-time = "2025-12-18T19:00:18.077Z" },
+]
+
+[[package]]
+name = "en-core-web-lg"
+version = "3.8.0"
+source = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl" }
+wheels = [
+    { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl", hash = "sha256:293e9547a655b25499198ab15a525b05b9407a75f10255e405e8c3854329ab63" },
 ]
 
 [[package]]
@@ -1118,6 +1136,20 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/24/bf/d1bda4f6168e0b2e9e5958945e01910052158313224ada5ce1fb2e1113b8/nodeenv-1.10.0.tar.gz", hash = "sha256:996c191ad80897d076bdfba80a41994c2b47c68e224c542b48feba42ba00f8bb", size = 55611, upload-time = "2025-12-20T14:08:54.006Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/88/b2/d0896bdcdc8d28a7fc5717c305f1a861c26e18c05047949fb371034d98bd/nodeenv-1.10.0-py2.py3-none-any.whl", hash = "sha256:5bb13e3eed2923615535339b3c620e76779af4cb4c6a90deccc9e36b274d3827", size = 23438, upload-time = "2025-12-20T14:08:52.782Z" },
+]
+
+[[package]]
+name = "nomquamgender"
+version = "0.1.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "unidecode" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/16/d0/99536aaa3933a34032c9635a5524b6a8c772cab043d1aa323a1d710a6a34/nomquamgender-0.1.4.tar.gz", hash = "sha256:de74ad423e3f3b56ea43a5508ccb2431d53666f21791530e33863bb6b475827d", size = 3938550, upload-time = "2022-08-02T18:15:44.501Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/90/e8/b02e5e101cbda87d67c2fdd76e59b8f5c8e6eadb244f739ef7e06eb91591/nomquamgender-0.1.4-py3-none-any.whl", hash = "sha256:55914319e0f40190683a7b93a4af781b38cfe4e56b617f7964956a5bd36396f6", size = 4131340, upload-time = "2022-08-02T18:15:13.673Z" },
 ]
 
 [[package]]
@@ -2390,6 +2422,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/ba/19/1b9b0e29f30c6d35cb345486df41110984ea67ae69dddbc0e8a100999493/tzdata-2026.2.tar.gz", hash = "sha256:9173fde7d80d9018e02a662e168e5a2d04f87c41ea174b139fbef642eda62d10", size = 198254, upload-time = "2026-04-24T15:22:08.651Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ce/e4/dccd7f47c4b64213ac01ef921a1337ee6e30e8c6466046018326977efd95/tzdata-2026.2-py2.py3-none-any.whl", hash = "sha256:bbe9af844f658da81a5f95019480da3a89415801f6cc966806612cc7169bffe7", size = 349321, upload-time = "2026-04-24T15:22:05.876Z" },
+]
+
+[[package]]
+name = "unidecode"
+version = "1.4.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/94/7d/a8a765761bbc0c836e397a2e48d498305a865b70a8600fd7a942e85dcf63/Unidecode-1.4.0.tar.gz", hash = "sha256:ce35985008338b676573023acc382d62c264f307c8f7963733405add37ea2b23", size = 200149, upload-time = "2025-04-24T08:45:03.798Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/8f/b7/559f59d57d18b44c6d1250d2eeaa676e028b9c527431f5d0736478a73ba1/Unidecode-1.4.0-py3-none-any.whl", hash = "sha256:c3c7606c27503ad8d501270406e345ddb480a7b5f38827eafe4fa82a137f0021", size = 235837, upload-time = "2025-04-24T08:45:01.609Z" },
 ]
 
 [[package]]

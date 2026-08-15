@@ -1,0 +1,135 @@
+# Gender for frequently cited people, resolved from Wikidata P21 and
+# frozen so runs are reproducible offline. Regenerate with
+# covered.wikidata.refresh(), then read the diff before committing:
+# check qid/label actually name the person meant. A gender_qid that
+# is neither Q6581097 nor Q6581072 is recorded, not coerced.
+name_norm,qid,label,gender,gender_qid,occupation
+abby phillip,Q56243574,Abby Phillip,female,Q6581072,Q1930187
+adam schiff,Q350843,Adam Schiff,male,Q6581097,Q82955
+albin kurti,Q441633,Albin Kurti,male,Q6581097,Q82955
+aleksandar vucic,Q222031,Aleksandar Vučić,male,Q6581097,Q82955
+alex thompson,Q108050244,Alex Thompson,male,Q6581097,Q19204627
+alice stewart,Q4726108,Alice Stewart,female,Q6581072,Q12765408
+amanda davies,Q130339873,Amanda Davies,female,Q6581072,Q37226
+anders aslund,Q2460494,Anders Åslund,male,Q6581097,Q188094
+andrew mccabe,Q27734885,Andrew G. McCabe,male,Q6581097,Q40348
+andy cohen,Q2014922,Andy Cohen,male,Q6581097,Q947873
+angus king,Q544464,Angus King,male,Q6581097,Q82955
+antony blinken,Q7821917,Antony Blinken,male,Q6581097,Q193391
+april martin,Q94585447,April Martin,unknown,,Q1650915
+ashley etienne,Q102568415,Ashley Etienne,female,Q6581072,Q5280566
+audie cornish,Q4819748,Audie Cornish,female,Q6581072,Q1930187
+austan goolsbee,Q780691,Austan Goolsbee,male,Q6581097,Q188094
+barack obama,Q76,Barack Obama,male,Q6581097,Q82955
+barbara mcquade,Q4859074,Barbara L. McQuade,female,Q6581072,Q40348
+benjamin netanyahu,Q43723,Benjamin Netanyahu,male,Q6581097,Q82955
+boris johnson,Q180589,Boris Johnson,male,Q6581097,Q1930187
+brendan boyle,Q4960876,Brendan F. Boyle,male,Q6581097,Q82955
+brian butler,Q52829012,Brian Butler,male,Q6581097,Q3665646
+brian lapointe,Q56951108,Brian E Lapointe,unknown,,Q1650915
+brittney griner,Q2925780,Brittney Griner,female,Q6581072,Q3665646
+bryan lanza,Q130483551,Bryan Lanza,male,Q6581097,Q11986654
+chad myers,Q88414136,Chad L Myers,unknown,,Q1650915
+chris deluzio,Q115181700,Chris Deluzio,male,Q6581097,Q82955
+christian jouret,Q65586492,Christian Jouret,male,Q6581097,Q82955
+christiane amanpour,Q236939,Christiane Amanpour,female,Q6581072,Q1930187
+chuck rocha,Q87574568,Chuck Rocha,male,Q6581097,Q8125919
+daniel goldman,Q102166118,Daniel Goldman,male,Q6581097,
+darrion trammell,Q106818289,Darrion Trammell,male,Q6581097,Q3665646
+david cameron,Q192,David Cameron,male,Q6581097,Q82955
+david frum,Q1174481,David Frum,male,Q6581097,Q1930187
+david urban,Q112548015,David Urban,male,Q6581097,Q36180
+donald trump,Q22686,Donald Trump,male,Q6581097,Q911554
+drew griffin,Q5307184,Drew Griffin,male,Q6581097,Q36180
+elie honig,Q109459335,Elie Honig,male,Q6581097,
+elliot williams,Q430263,Elliot Williams,male,Q6581097,Q3665646
+erin perrine,Q133255850,Erin Perrine,female,Q6581072,Q8125919
+eugene scott,Q104440024,Eugene Scott,male,Q6581097,Q1930187
+fran drescher,Q230632,Fran Drescher,female,Q6581072,Q10798782
+geoffroy van raemdonck,Q110299429,Geoffroy van Raemdonck,male,Q6581097,Q484876
+glenn youngkin,Q100963892,Glenn Youngkin,male,Q6581097,Q2961975
+gloria borger,Q5571332,Gloria Borger,female,Q6581072,Q1930187
+inna sovsun,Q16717067,Inna Sovsun,female,Q6581072,Q82955
+jake sullivan,Q124285822,Jake Sullivan,male,Q6581097,Q11774891
+jake tapper,Q6125032,Jake Tapper,male,Q6581097,Q1930187
+james clapper,Q1681008,James R. Clapper,male,Q6581097,Q189290
+james cleverly,Q6131460,James Cleverly,male,Q6581097,Q82955
+james marks,Q112025371,James Marks,male,Q6581097,
+jeff zeleny,Q18157171,Jeff Zeleny,male,Q6581097,Q1930187
+jeffrey clark,Q99213513,Jeffrey N Clark,unknown,,Q1650915
+jeffrey goldberg,Q6176005,Jeffrey Goldberg,male,Q6581097,Q36180
+jeffrey rosen,Q106996042,Jeffrey Rosen,male,Q6581097,Q43845
+jemele hill,Q6177096,Jemele Hill,female,Q6581072,Q1930187
+jennifer rodgers,Q100994151,Jennifer Rodgers,female,Q6581072,Q1076502
+jill dougherty,Q6192812,Jill Dougherty,female,Q6581072,Q1930187
+joan biskupic,Q6204859,Joan Biskupic,female,Q6581072,Q1930187
+joe biden,Q6279,Joe Biden,male,Q6581097,Q82955
+joe walsh,Q354033,Joe Walsh,male,Q6581097,Q855091
+john dean,Q110664043,John Dean,male,Q6581097,Q175151
+john kelly,Q16025235,John Kelly,male,Q6581097,Q47064
+john king,Q671520,John King,male,Q6581097,Q36180
+john kirby,Q6243189,John Kirby,male,Q6581097,Q40348
+john miller,Q18044948,John Miller,male,Q6581097,Q1028181
+john monaghan,Q112484160,John Monaghan,male,Q6581097,Q121594
+jon tester,Q529351,Jon Tester,male,Q6581097,Q82955
+jonathan alter,Q12052861,Jonathan Alter,male,Q6581097,Q1086863
+joseph kenny,Q110245309,Joseph Kenny,male,Q6581097,
+josh rogin,Q42669139,Josh Rogin,male,Q6581097,Q1930187
+julia davis,Q3189038,Julia Davis,female,Q6581072,Q245068
+juliette kayyem,Q6309009,Juliette Kayyem,female,Q6581072,Q40348
+kamala harris,Q10853588,Kamala Harris,female,Q6581072,Q82955
+karen finney,Q6369638,Karen Finney,female,Q6581072,Q1086863
+kate bedingfield,Q102036550,Kate Bedingfield,female,Q6581072,Q5280566
+kate williams,Q114273493,Kate Williams,female,Q6581072,Q36180
+kevin guthrie,Q18043992,Kevin Guthrie,male,Q6581097,Q33999
+kevin mccarthy,Q281404,Kevin McCarthy,male,Q6581097,Q10800557
+kristen holmes,Q130305141,Kristen Holmes,unknown,,Q24705156
+laura jarrett,Q106531617,Laura Jarrett,female,Q6581072,Q947873
+marc caputo,Q124355492,Marc Caputo,male,Q6581097,Q1930187
+mark rutte,Q57792,Mark Rutte,male,Q6581097,Q82955
+matt gorman,Q8981785,Matt Gorman,male,Q6581097,Q3665646
+matthew chance,Q6790294,Matthew Chance,male,Q6581097,Q1930187
+matthew shay,Q99348807,Matthew Shay,unknown,,Q1650915
+max boot,Q3890747,Max Boot,male,Q6581097,Q36180
+maziar bahari,Q1334414,Maziar Bahari,male,Q6581097,Q2526255
+michael fanone,Q110226467,Michael Fanone,male,Q6581097,Q384593
+michael smerconish,Q6834456,Michael Smerconish,male,Q6581097,Q2722764
+mike woelfel,Q19605268,Mike Woelfel,male,Q6581097,Q82955
+mitch mcconnell,Q355522,Mitch McConnell,male,Q6581097,Q82955
+mo brooks,Q1941306,Mo Brooks,male,Q6581097,Q82955
+nancy pelosi,Q170581,Nancy Pelosi,female,Q6581072,Q82955
+nic robertson,Q15995434,Nic Robertson,male,Q6581097,Q1930187
+nick paton walsh,Q15995568,Nick Paton Walsh,male,Q6581097,Q1930187
+nikki haley,Q11668,Nikki Haley,female,Q6581072,Q82955
+nina khrushcheva,Q4501927,Nina Khrushcheva,female,Q6581072,Q203184
+olga smirnova,Q16234192,Olga Smirnova,female,Q6581072,Q805221
+owen martin,Q75827215,Owen Martin,male,Q6581097,
+paula reid,Q90581902,Paula Reid,female,Q6581072,Q1930187
+phillip ensler,Q122822564,Phillip Ensler,male,Q6581097,Q37226
+rachael bade,Q72011875,Rachael Bade,female,Q6581072,Q1930187
+richard clarida,Q7324755,Richard Clarida,male,Q6581097,Q188094
+richard donoghue,Q97573914,Richard Donoghue,male,Q6581097,
+richard gabriel,Q112390010,Richard Gabriel,male,Q6581097,
+ron dermer,Q7363705,Ron Dermer,male,Q6581097,Q1930187
+ron desantis,Q3105215,Ron DeSantis,male,Q6581097,Q82955
+ruben gallego,Q16218474,Ruben Gallego,male,Q6581097,Q82955
+ryan goodman,Q7384096,Ryan Goodman,male,Q6581097,Q121594
+s e cupp,Q7387458,S. E. Cupp,female,Q6581072,Q1930187
+sara fischer,Q104544512,Sara Fischer,female,Q6581072,
+sarah longwell,Q72759128,Sarah Longwell,female,Q6581072,Q2516866
+scott jennings,Q6107082,Scott Jennings,male,Q6581097,Q1930187
+sergey lavrov,Q58217,Sergey Lavrov,male,Q6581097,Q193391
+shermichael singleton,Q126683358,Shermichael Singleton,male,Q6581097,Q8125919
+steve bannon,Q16146870,Steve Bannon,male,Q6581097,Q3282637
+steve hall,Q104839408,Steve Hall,male,Q6581097,Q19204627
+steven johnson,Q980046,Steven Johnson,male,Q6581097,Q1930187
+susan glasser,Q47465855,Susan Glasser,female,Q6581072,Q1930187
+tara palmeri,Q23008068,Tara Palmeri,female,Q6581072,Q1930187
+ted brandsen,Q19309864,Ted Brandsen,male,Q6581097,Q2490358
+thomas gift,Q89290999,Thomas L Gift,male,Q6581097,Q1650915
+tim parlatore,Q131401367,Tim Parlatore,male,Q6581097,Q40348
+tucker carlson,Q743162,Tucker Carlson,male,Q6581097,Q1642960
+ursula von der leyen,Q60772,Ursula von der Leyen,female,Q6581072,Q39631
+vladyslav atroshenko,Q12079666,Vladyslav Atroshenko,male,Q6581097,Q82955
+william tong,Q115947574,William Tong,unknown,,
+yuri shvets,Q1713928,Yuri Shvets,male,Q6581097,Q1930187

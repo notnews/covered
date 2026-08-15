@@ -362,3 +362,20 @@ def test_every_label_uses_declared_vocabulary() -> None:
         label = _label(r)
         assert label.sector in taxonomy.SECTORS
         assert label.epistemic_role in taxonomy.EPISTEMIC_ROLES
+        assert label.entity_form in taxonomy.ENTITY_FORMS
+        assert label.gender in taxonomy.GENDERS
+
+
+def test_the_new_axes_default_to_unknown() -> None:
+    """classify() reads a role clause and cannot see a name or a spaCy model.
+
+    Defaulting matters beyond tidiness: these axes were added to a dataclass
+    from which published figures are already derived, and anything other than
+    an inert default would move a number that nothing in this change touched.
+    """
+    label = _label("SECRETARY OF STATE")
+    assert label.entity_form == "unknown"
+    assert label.entity_form_source == "none"
+    assert label.gender == "unknown"
+    assert label.gender_source == "none"
+    assert label.gender_p != label.gender_p, "unread probability must be nan"

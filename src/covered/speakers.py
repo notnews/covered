@@ -18,7 +18,7 @@ from dataclasses import dataclass
 
 from covered.config import REFERENCE
 
-__all__ = ["Turn", "classify_role", "parse_turns"]
+__all__ = ["Turn", "classify_role", "is_nonperson", "parse_turns"]
 
 # A speaker label: a run of 1-5 ALL-CAPS tokens (allowing ``.'-``), an optional
 # comma-delimited role clause, then a colon and whitespace. The leading boundary
@@ -111,7 +111,20 @@ def _nonperson_tokens() -> tuple[str, ...]:
     return tuple(out)
 
 
-def _is_nonperson(name: str) -> bool:
+def is_nonperson(name: str) -> bool:
+    """Whether a speaker label names no identifiable individual.
+
+    ``UNIDENTIFIED MALE``, ``CROWD``, ``AUTOMATED VOICE``. This means *unnamed*,
+    not *not a person*: an organisational speaker such as ``PENTAGON
+    SPOKESMAN`` is a named institutional voice and is deliberately absent from
+    the list. :mod:`covered.persons` depends on that distinction.
+
+    Args:
+        name: Speaker label as written in the transcript.
+
+    Returns:
+        True when the label is one of the unnamed-voice conventions.
+    """
     low = name.strip().lower()
     return any(low == tok or low.startswith(tok + " ") for tok in _nonperson_tokens())
 
@@ -129,7 +142,7 @@ def classify_role(role: str | None, name: str = "") -> str:
     sources both overstates guests and, because the shows concerned are mostly
     early-2000s, does so unevenly across years.
     """
-    if _is_nonperson(name):
+    if is_nonperson(name):
         return "nonperson"
     if not role:
         return "unknown"

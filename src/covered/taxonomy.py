@@ -35,7 +35,9 @@ from dataclasses import dataclass
 from covered.config import REFERENCE
 
 __all__ = [
+    "ENTITY_FORMS",
     "EPISTEMIC_ROLES",
+    "GENDERS",
     "SECTORS",
     "SECTOR_DEFAULT_ROLE",
     "SourceLabel",
@@ -75,6 +77,25 @@ EPISTEMIC_ROLES: tuple[str, ...] = (
     "popular_opinion",
     "unresolved",
 )
+
+# Whether the source is a person, an institution, or a cited-but-uncountable
+# voice. Not derivable from the crossing above: a role clause says what kind of
+# institution someone speaks for, never whether "the source" is a human at all.
+# "unnamed" is a substantive category, not a residual -- "officials", "sources",
+# "prosecutors" are cited sources that cannot be resolved to countable people,
+# which is exactly why counting them needs bounds rather than a number.
+ENTITY_FORMS: tuple[str, ...] = (
+    "person",
+    "organization",
+    "unnamed",
+    "unknown",
+)
+
+# How a personal name is gendered in reference data. Read the module docstring
+# of covered.persons before reporting anything on this axis: it measures the
+# gendering of names in aggregate, is invalid for any individual, and its error
+# rate is roughly ten times higher for Asian than European names.
+GENDERS: tuple[str, ...] = ("female", "male", "unknown")
 
 # Where the epistemic lexicon is silent, fall back on what the sector implies.
 # Every one of these is a judgement call, so classify() tags the result
@@ -299,6 +320,15 @@ class SourceLabel:
     epistemic_source: (
         str  # "lexicon" | "standing_rule" | "sector_default" | "topic_needed"
     )
+    # Filled by covered.persons, which needs a name and a spaCy pipeline that
+    # classify() has no access to. They default to unknown so that every number
+    # already computed from this dataclass is unchanged: adding an axis must
+    # not silently move a published figure.
+    entity_form: str = "unknown"  # see ENTITY_FORMS
+    entity_form_source: str = "none"  # "ner" | "nonperson_list" | "none"
+    gender: str = "unknown"  # see GENDERS
+    gender_p: float = float("nan")  # P(name used by women); nan when unread
+    gender_source: str = "none"  # "wikidata" | "name_model" | "none"
 
 
 def _load_lexicon(filename: str, value_column: str) -> tuple[tuple[str, str], ...]:
