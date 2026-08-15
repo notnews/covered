@@ -14,3 +14,12 @@ outputs/figures/
 dist/
 .env
 .DS_Store
+
+# LaTeX build artifacts
+ms/*.aux
+ms/*.log
+ms/*.bbl
+ms/*.blg
+ms/*.out
+ms/*.fls
+ms/*.fdb_latexmk
