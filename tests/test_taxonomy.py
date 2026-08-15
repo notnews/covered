@@ -97,6 +97,23 @@ def test_party_tag_is_lifted_out_of_the_role() -> None:
     assert label.epistemic_role == "principal"
 
 
+@pytest.mark.parametrize("role", ["(R) ARIZONA", "(D-NY) SENATOR", "(I) VERMONT"])
+def test_real_party_tags_still_parse(role: str) -> None:
+    assert _label(role).party in {"R", "D", "I"}
+
+
+@pytest.mark.parametrize(
+    "role", ["U.S. ARMY (RET.)", "LT. GEN. (RET.)", "GEN. WESLEY CLARK (RET.)"]
+)
+def test_retired_marker_is_not_mistaken_for_a_party_tag(role: str) -> None:
+    # "(RET.)" once matched the party pattern as "R", which both invented a
+    # Republican and erased the standing that makes a retired officer a
+    # commentator rather than a serving spokesperson.
+    label = _label(role)
+    assert label.party == "none"
+    assert label.standing == "former"
+
+
 # --- polity -----------------------------------------------------------------
 
 

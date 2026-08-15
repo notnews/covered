@@ -46,6 +46,11 @@ founder,principal,
 chairman,principal,
 owner,principal,
 head coach,principal,
+# A candidate is the subject of the story, not a bystander to it; the fact that
+# they are seeking rather than holding office is carried by standing=candidate.
+candidate,principal,
+presidential candidate,principal,
+nominee,principal,
 # --- spokesperson ----------------------------------------------------------
 press secretary,spokesperson,
 white house press secretary,spokesperson,
@@ -126,9 +131,6 @@ lawyer for,participant,
 campaign attorney,participant,
 campaign manager,participant,
 negotiator,participant,
-candidate,participant,
-presidential candidate,participant,
-nominee,participant,
 hostage,participant,
 # --- eyewitness ------------------------------------------------------------
 witness,eyewitness,

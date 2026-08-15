@@ -134,6 +134,11 @@ corrections,law_enforcement,
 warden,law_enforcement,
 # --- military --------------------------------------------------------------
 pentagon,military,
+# Longest-match runs per axis and does not compose within one: "press secretary"
+# is longer than "pentagon" and would otherwise pull this to the executive.
+pentagon press secretary,military,
+pentagon spokesman,military,
+defense department,military,
 u.s. army,military,
 u.s. navy,military,
 u.s. air force,military,

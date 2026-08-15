@@ -134,7 +134,11 @@ _DELIVERY_PATTERNS: tuple[tuple[str, str], ...] = (
     ("taped", r"\(\s*(?:on tape|taped|recorded)\s*\)"),
 )
 
-_PARTY_TAG = re.compile(r"\(\s*([RDI])\s*[-\s]?\s*([A-Z .]{0,20}?)\s*\)", re.IGNORECASE)
+# A party tag is a bare R/D/I, optionally with a two-letter state: "(R)",
+# "(D-NY)". Deliberately narrow and case-sensitive -- an earlier permissive
+# version matched "(RET.)" as party "R", which silently turned every retired
+# officer into a sitting Republican and destroyed their "former" standing.
+_PARTY_TAG = re.compile(r"\(\s*([RDI])(?:\s*[-–]\s*[A-Z]{2})?\s*\)")  # noqa: RUF001
 
 _INTERNATIONAL = re.compile(
     r"\bu\.?n\.?\b|united nations|\bnato\b|european union|world bank"
