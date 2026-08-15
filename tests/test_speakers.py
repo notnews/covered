@@ -117,3 +117,68 @@ def test_clip_handles_videotape_and_audio_markers() -> None:
 def test_empty_text_returns_no_turns() -> None:
     assert speakers.parse_turns("", era_id="era3") == []
     assert speakers.parse_turns("   \n  ", era_id="era3") == []
+
+
+# --- role propagation -------------------------------------------------------
+# A role string appears only on a speaker's FIRST label; every later turn is a
+# bare surname. Without propagation, any role-keyed classification (office,
+# sector) can only ever fire on first mentions -- which is why office coverage
+# sat at 7-10% of guest turns while ~82% of turns are bare continuations.
+
+
+def test_continuation_inherits_role_from_roster() -> None:
+    text = (
+        "ANDERSON COOPER, CNN HOST: Good evening. We start with the storm. "
+        "SENATOR JANE DOE, (D) NEW YORK: Thank you, Anderson. "
+        "COOPER: Senator, what is your response? "
+        "DOE: I think the criticism is misplaced."
+    )
+    turns = speakers.parse_turns(text, era_id="era3")
+    assert _names(turns) == ["ANDERSON COOPER", "SENATOR JANE DOE", "COOPER", "DOE"]
+
+    # first mentions carry their own role
+    assert (turns[0].role_raw, turns[0].role_source) == ("CNN HOST", "local")
+    assert (turns[1].role_raw, turns[1].role_source) == ("(D) NEW YORK", "local")
+
+    # continuations inherit it, and are marked as having done so
+    assert (turns[2].role_raw, turns[2].role_source) == ("CNN HOST", "roster")
+    assert (turns[3].role_raw, turns[3].role_source) == ("(D) NEW YORK", "roster")
+
+
+def test_local_role_is_never_overwritten_by_the_roster() -> None:
+    # Same surname relabelled mid-transcript: the label in front of us wins.
+    text = (
+        "JANE DOE, CNN CORRESPONDENT: Reporting from the capital. "
+        "DOE, CNN SENIOR CORRESPONDENT: An update on that story."
+    )
+    turns = speakers.parse_turns(text, era_id="era3")
+    assert (turns[1].role_raw, turns[1].role_source) == (
+        "CNN SENIOR CORRESPONDENT",
+        "local",
+    )
+
+
+def test_speaker_with_no_role_anywhere_has_no_role_source() -> None:
+    text = "SMITH: I was there when it happened. JONES: So was I, briefly."
+    turns = speakers.parse_turns(text, era_id="era3")
+    assert all(t.role_raw is None for t in turns)
+    assert all(t.role_source == "none" for t in turns)
+
+
+def test_propagated_role_survives_into_clip_turns() -> None:
+    # Clip turns are the measure that moved most in covered's headline finding,
+    # so they must carry role too -- not just live ones.
+    text = (
+        "WOLF BLITZER, CNN ANCHOR: Here is the president. "
+        "(BEGIN VIDEO CLIP) "
+        "DONALD TRUMP, PRESIDENT OF THE UNITED STATES: We will win. "
+        "(END VIDEO CLIP) "
+        "BLITZER: And later in the day. "
+        "(BEGIN VIDEO CLIP) TRUMP: We will win again. (END VIDEO CLIP)"
+    )
+    turns = speakers.parse_turns(text, era_id="era3")
+    trump_clips = [t for t in turns if t.name_norm == "donald trump"]
+    assert len(trump_clips) == 2
+    assert all(t.source_mode == "clip" for t in trump_clips)
+    assert all(t.role_raw == "PRESIDENT OF THE UNITED STATES" for t in trump_clips)
+    assert [t.role_source for t in trump_clips] == ["local", "roster"]

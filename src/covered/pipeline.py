@@ -70,6 +70,7 @@ def build_turns(
                     "char_end": t.char_end,
                     "speaker_raw": t.speaker_raw,
                     "role_raw": t.role_raw,
+                    "role_source": t.role_source,
                     "name_norm": t.name_norm,
                     "staff_flag": t.staff_flag,
                     "source_mode": t.source_mode,

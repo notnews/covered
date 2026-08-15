@@ -48,7 +48,8 @@ class Turn:
     char_start: int  # start of the utterance (after the label) in source text
     char_end: int  # end of the utterance in source text
     speaker_raw: str
-    role_raw: str | None
+    role_raw: str | None  # roster-filled on bare continuations; see role_source
+    role_source: str  # "local" (labelled here) | "roster" (inherited) | "none"
     name_norm: str  # canonical-within-transcript name (lower-cased), roster-resolved
     staff_flag: str  # "staff" | "guest" | "nonperson" | "unknown"
     source_mode: str  # "live" | "clip" -- played clip vs. live appearance
@@ -158,14 +159,16 @@ def parse_turns(text: str, era_id: str | None = None) -> list[Turn]:
         return []
 
     # Pass 2: build the per-transcript roster from full-form labels (those with
-    # a role, or multi-token names), surname -> (name_norm, staff_flag).
-    roster: dict[str, tuple[str, str]] = {}
+    # a role, or multi-token names), surname -> (name_norm, staff_flag, role_raw).
+    # The role is carried because a speaker is labelled with one only on first
+    # mention; without it every later turn is unclassifiable by role.
+    roster: dict[str, tuple[str, str, str | None]] = {}
     for _start, _utt_start, name, role in matches:
         name_norm = name.lower()
         flag = classify_role(role, name)
         is_full = role is not None or len(name.split()) > 1
         if is_full and flag in {"staff", "guest"}:
-            roster.setdefault(_surname(name_norm), (name_norm, flag))
+            roster.setdefault(_surname(name_norm), (name_norm, flag, role))
 
     # Pass 3: emit turns, slicing utterances between consecutive labels.
     clip_spans = _clip_spans(text)
@@ -181,10 +184,12 @@ def parse_turns(text: str, era_id: str | None = None) -> list[Turn]:
 
         name_norm = name.lower()
         flag = classify_role(role, name)
+        role_source = "local" if role else "none"
         if flag == "unknown":  # bare continuation surname -> roster lookup
             hit = roster.get(_surname(name_norm))
             if hit:
-                name_norm, flag = hit
+                name_norm, flag, role = hit
+                role_source = "roster" if role else "none"
         turns.append(
             Turn(
                 turn_index=i,
@@ -192,6 +197,7 @@ def parse_turns(text: str, era_id: str | None = None) -> list[Turn]:
                 char_end=true_end,
                 speaker_raw=name,
                 role_raw=role,
+                role_source=role_source,
                 name_norm=name_norm,
                 staff_flag=flag,
                 source_mode="clip" if _in_clip(label_start, clip_spans) else "live",

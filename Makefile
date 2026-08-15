@@ -22,8 +22,10 @@ format:  ## ruff format + import sort
 	$(PY) ruff format src tests
 	$(PY) ruff check --fix src tests
 
-typecheck:  ## mypy
-	$(PY) mypy
+# pyright, not mypy: mypy is not a dependency, so `uv run mypy` silently fell
+# through to whatever mypy was on PATH and failed with "Missing target module".
+typecheck:  ## pyright (configured in [tool.pyright])
+	$(PY) pyright
 
 test:  ## pytest on fixtures (no data download)
 	$(PY) pytest
