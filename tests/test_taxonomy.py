@@ -231,6 +231,22 @@ def test_quoted_or_domain_role_is_a_media_outlet(role: str) -> None:
     assert label.sector_source == "form"
 
 
+@pytest.mark.parametrize(
+    "role",
+    ["THE NEW YORK TIMES", "WALL STREET JOURNAL", "BLEACHER REPORT", "NEW YORK POST"],
+)
+def test_unquoted_outlet_names_are_media(role: str) -> None:
+    label = taxonomy.classify(role)
+    assert label.sector == "media"
+    assert label.sector_source == "form"
+
+
+def test_outlet_list_matches_whole_clause_only() -> None:
+    # Substring matching would let "TIMES" or "POST" swallow unrelated roles.
+    assert taxonomy.classify("POST OFFICE INSPECTOR").sector != "media"
+    assert taxonomy.classify("TIMES SQUARE VENDOR").sector != "media"
+
+
 def test_a_keyword_match_beats_the_typographic_rule() -> None:
     # Quoted, but the role says what they do, so the keyword should win.
     label = taxonomy.classify('SYNDICATED COLUMNIST, "CHICAGO SUN-TIMES"')
@@ -271,6 +287,26 @@ def test_specific_participant_roles_still_beat_the_generic_entry() -> None:
     assert _label("ATTORNEY FOR GEORGE ZIMMERMAN").epistemic_role == "participant"
     assert _label("BUSH CAMPAIGN ATTORNEY").epistemic_role == "participant"
     assert _label("LEAD PROSECUTOR").epistemic_role == "participant"
+
+
+@pytest.mark.parametrize(
+    ("role", "must_not_be"),
+    [
+        ("BROOKINGS INSTITUTION", "principal"),  # "king" inside "brookings"
+        ("CAR DEALER", "law_enforcement"),  # "dea" inside "dealer"
+        ("IDEA FACTORY", "law_enforcement"),  # "dea" inside "idea"
+    ],
+)
+def test_keywords_match_whole_words_only(role: str, must_not_be: str) -> None:
+    label = _label(role)
+    assert must_not_be not in (label.sector, label.epistemic_role)
+
+
+def test_a_former_participant_is_no_longer_a_participant() -> None:
+    # Having had a direct role in past events is not having one in the events
+    # now being reported.
+    assert _label("LEAD PROSECUTOR").epistemic_role == "participant"
+    assert _label("FORMER LEAD PROSECUTOR").epistemic_role != "participant"
 
 
 def test_sector_defaults_cover_every_sector() -> None:

@@ -1,0 +1,140 @@
+# News outlets that appear as a speaker's whole role clause, meaning a visiting
+# journalist introduced by affiliation alone. CNN usually sets these in quotes
+# ("CHICAGO SUN-TIMES"), which taxonomy._media_by_form catches typographically,
+# but often enough writes them bare -- THE NEW YORK TIMES, WALL STREET JOURNAL,
+# BLEACHER REPORT -- and those need naming.
+#
+# Curated rather than registry-derived: the set of outlets a US cable network
+# books from is small and slow-moving, whereas a media registry would pull in
+# tens of thousands of local titles that never appear here and would raise the
+# false-match rate against ordinary role text.
+#
+# Matched case-insensitively as a whole role clause (after delivery tags and a
+# leading "the" are stripped), never as a substring, so "TIMES" alone or a role
+# like "POST OFFICE INSPECTOR" cannot match.
+new york times
+washington post
+wall street journal
+los angeles times
+usa today
+chicago tribune
+chicago sun-times
+boston globe
+miami herald
+dallas morning news
+houston chronicle
+philadelphia inquirer
+denver post
+seattle times
+san francisco chronicle
+atlanta journal-constitution
+detroit free press
+new york post
+new york daily news
+newsday
+baltimore sun
+st. louis post-dispatch
+arizona republic
+las vegas review-journal
+orlando sentinel
+tampa bay times
+star-ledger
+plain dealer
+oregonian
+sacramento bee
+kansas city star
+charlotte observer
+financial times
+guardian
+the guardian
+daily telegraph
+the times of london
+independent
+daily mail
+economist
+the economist
+reuters
+associated press
+bloomberg
+bloomberg news
+agence france-presse
+time
+time magazine
+newsweek
+u.s. news & world report
+the atlantic
+atlantic monthly
+harper's
+the new yorker
+new york magazine
+vanity fair
+rolling stone
+the nation
+national review
+national review online
+the weekly standard
+the new republic
+mother jones
+reason
+the american prospect
+fortune
+forbes
+business week
+businessweek
+barron's
+the hill
+politico
+roll call
+axios
+punchbowl news
+the daily beast
+huffington post
+slate
+salon
+vox
+buzzfeed
+buzzfeed news
+talking points memo
+the intercept
+propublica
+mediaite
+the free press
+puck
+semafor
+abc news
+cbs news
+nbc news
+fox news
+msnbc
+pbs
+pbs newshour
+npr
+bbc
+bbc news
+sky news
+al jazeera
+c-span
+court tv
+bleacher report
+espn
+sports illustrated
+the athletic
+variety
+hollywood reporter
+entertainment weekly
+billboard
+deadline
+tmz
+people magazine
+us weekly
+wired
+techcrunch
+the verge
+ars technica
+recode
+the information
+scientific american
+nature
+new england journal of medicine
+kaiser health news
+stat news

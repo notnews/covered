@@ -118,7 +118,9 @@ _CREDENTIALED = frozenset(
 
 # Roles held rather than earned: out of the post is out of the standing, so a
 # former holder speaking on air is commenting, not speaking for the institution.
-_POSITIONAL_ROLES = frozenset({"principal", "spokesperson"})
+# "participant" belongs here too -- having had a direct role in past events is
+# not having one in the events now being reported.
+_POSITIONAL_ROLES = frozenset({"principal", "spokesperson", "participant"})
 
 _STANDING_PATTERNS: tuple[tuple[str, str], ...] = (
     ("candidate", r"\bcandidate\b|\bnominee\b|\bcampaign\b|\brunning for\b"),
@@ -323,6 +325,17 @@ def _epistemic_lexicon() -> tuple[tuple[str, str], ...]:
     return _load_lexicon("epistemic_lexicon.csv", "epistemic_role")
 
 
+@functools.lru_cache(maxsize=1)
+def _outlets() -> frozenset[str]:
+    """Curated news outlets, matched as a whole role clause."""
+    path = REFERENCE / "news_outlets.txt"
+    return frozenset(
+        line.strip().lower()
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.startswith("#")
+    )
+
+
 def strip_modifiers(role: str) -> tuple[str, str, str]:
     """Split a raw role string into ``(role_clean, delivery, party)``.
 
@@ -354,21 +367,41 @@ def _media_by_form(role_clean: str) -> str:
 
     CNN sets an outlet name in quotes when a visiting journalist's affiliation is
     the whole role -- ``"CHICAGO SUN-TIMES"``, ``"THE NEW YORKER"`` -- and web
-    outlets appear as bare domains. Enumerating outlet names would be endless
-    and would date badly; the typographic convention generalises.
+    outlets appear as bare domains. Both generalise typographically, without
+    anyone enumerating outlet names.
+
+    Often enough, though, the name is written bare: ``THE NEW YORK TIMES``,
+    ``WALL STREET JOURNAL``, ``BLEACHER REPORT``. Those need a list, so a
+    curated one is matched as the *whole* clause -- never as a substring, or
+    "TIMES" would swallow unrelated roles.
     """
     text = role_clean.strip()
     if len(text) > 2 and text.startswith('"') and text.rstrip(";").endswith('"'):
         return "quoted_outlet"
     if re.search(r"\b[\w-]+\.(?:com|org|net|tv|news)\b", text, re.IGNORECASE):
         return "domain"
+    bare = re.sub(r"^the\s+", "", text.lower().strip(" \"';,.")).strip()
+    if bare in _outlets():
+        return "named_outlet"
     return ""
 
 
+@functools.lru_cache(maxsize=4096)
+def _kw_pattern(kw: str) -> re.Pattern[str]:
+    r"""Whole-word matcher for one keyword.
+
+    Plain substring matching silently mislabels: "king" fires inside
+    "BROOKINGS INSTITUTION", "dea" inside "IDEA" and "CAR DEALER". Lookarounds
+    rather than ``\b`` because keywords may begin or end with punctuation
+    ("sen.", "co-founder"), where ``\b`` sits in the wrong place.
+    """
+    return re.compile(rf"(?<!\w){re.escape(kw)}(?!\w)")
+
+
 def _match(lexicon: tuple[tuple[str, str], ...], text: str) -> tuple[str, str]:
-    """Return ``(value, keyword)`` for the longest keyword contained in ``text``."""
+    """Return ``(value, keyword)`` for the longest keyword occurring in ``text``."""
     for kw, val in lexicon:  # pre-sorted longest-first
-        if kw in text:
+        if _kw_pattern(kw).search(text):
             return val, kw
     return "", ""
 
