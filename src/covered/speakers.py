@@ -90,6 +90,17 @@ def _role_lexicon() -> dict[str, set[str]]:
 
 
 @functools.lru_cache(maxsize=1)
+def _programs() -> frozenset[str]:
+    """CNN programme names, used to catch staff introduced by their show."""
+    path = REFERENCE / "cnn_programs.txt"
+    return frozenset(
+        line.strip().lower()
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.startswith("#")
+    )
+
+
+@functools.lru_cache(maxsize=1)
 def _nonperson_tokens() -> tuple[str, ...]:
     path = REFERENCE / "nonperson_speakers.txt"
     out: list[str] = []
@@ -111,6 +122,12 @@ def classify_role(role: str | None, name: str = "") -> str:
     A role containing a staff keyword (host/anchor/correspondent/analyst/CNN…)
     is staff; any other non-empty role is treated as an external guest. With no
     role we cannot tell, so it is ``unknown`` (and usually resolved via roster).
+
+    A role that is simply a CNN programme name is also staff: the network
+    introduces its own people by the show they work on (``CAPITAL GANG`` /
+    Robert Novak, ``INSIGHT`` / Jonathan Mann). Counting those as external
+    sources both overstates guests and, because the shows concerned are mostly
+    early-2000s, does so unevenly across years.
     """
     if _is_nonperson(name):
         return "nonperson"
@@ -119,6 +136,10 @@ def classify_role(role: str | None, name: str = "") -> str:
     low = role.lower()
     lex = _role_lexicon()
     if any(kw in low for kw in lex["staff"]):
+        return "staff"
+    # strip delivery tags -- "INSIGHT (voice-over)" is still the programme
+    bare = re.sub(r"\(.*?\)", "", low).strip().strip(";,. ")
+    if bare in _programs():
         return "staff"
     return "guest"
 

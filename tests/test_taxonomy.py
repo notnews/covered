@@ -242,6 +242,44 @@ def test_quoting_is_not_read_into_ordinary_roles() -> None:
     assert taxonomy.classify('HE SAID "NO"').sector_source != "form"
 
 
+# --- measured rather than imputed -------------------------------------------
+# A label is only evidence if it was read off the role string. These roles were
+# previously assigned by falling back on the sector's default.
+
+
+@pytest.mark.parametrize(
+    ("role", "epistemic_role"),
+    [
+        ("ACTOR", "principal"),
+        ("ACTRESS", "principal"),
+        ("COMEDIAN", "principal"),
+        ("CHEF", "principal"),
+        ("JOURNALIST", "commentator"),
+        ("DEFENSE ATTORNEY", "commentator"),
+        ("PROSECUTOR", "commentator"),
+    ],
+)
+def test_common_roles_are_read_not_imputed(role: str, epistemic_role: str) -> None:
+    label = _label(role)
+    assert label.epistemic_role == epistemic_role
+    assert label.epistemic_source == "lexicon"
+
+
+def test_specific_participant_roles_still_beat_the_generic_entry() -> None:
+    # "attorney" is now in the lexicon as commentator; "attorney for" must still
+    # win under longest-match, or the participant/commentator split collapses.
+    assert _label("ATTORNEY FOR GEORGE ZIMMERMAN").epistemic_role == "participant"
+    assert _label("BUSH CAMPAIGN ATTORNEY").epistemic_role == "participant"
+    assert _label("LEAD PROSECUTOR").epistemic_role == "participant"
+
+
+def test_sector_defaults_cover_every_sector() -> None:
+    # classify() falls back on this map, so a missing key would silently yield
+    # "unresolved" for a sector that is otherwise perfectly well identified.
+    assert set(taxonomy.SECTOR_DEFAULT_ROLE) == set(taxonomy.SECTORS)
+    assert set(taxonomy.SECTOR_DEFAULT_ROLE.values()) <= set(taxonomy.EPISTEMIC_ROLES)
+
+
 def test_every_label_uses_declared_vocabulary() -> None:
     roles = [
         "SECRETARY OF STATE",

@@ -1,0 +1,284 @@
+# CNN programme names, derived from the corpus program.name column (>=5
+# segments, name longer than 3 chars). A speaker whose ROLE clause is a
+# programme name is CNN staff introduced by the show they work on, not an
+# external source -- CAPITAL GANG / Robert Novak, INSIGHT / Jonathan Mann,
+# RELIABLE SOURCES / Howard Kurtz. Matched case-insensitively against the role
+# after delivery tags are stripped.
+#
+# Regenerate: see scripts/build_role_index.py notes; derived from data/raw.
+@thishour with berman and michaela
+ac 360 later
+ahead of the curve
+amanpour
+american morning
+american morning with paula zahn
+american morning: wake up call
+anderson cooper 360 degrees
+anthony bourdain parts unknown
+around the world
+asia tonight
+at this hour
+ballot bowl 2008
+biz asia
+both sides with jesse jackson
+breaking news
+burden of proof
+business traveler
+business traveller
+business unusual
+campbell brown
+campbell brown: no bias, no bull
+capital gang
+chicagoland
+closing bell
+cnn 10
+cnn ahead of the curve
+cnn american morning with paula zahn
+cnn american stories
+cnn breaking news
+cnn burden of proof
+cnn business unusual
+cnn capital gang
+cnn cnndotcom
+cnn connie chung tonight
+cnn crossfire
+cnn daybreak
+cnn diplomatic license
+cnn election center
+cnn evans, novak, hunt & shields
+cnn first evening news
+cnn he said/she said
+cnn hotspots
+cnn in the money
+cnn inside politics
+cnn insight
+cnn internaitonal asia tonight
+cnn international asia tonight
+cnn international best of insight
+cnn international best of q&a;
+cnn international biz asia
+cnn international diplomatic linense
+cnn international e-biz asia
+cnn international inside africa
+cnn international inside asia
+cnn international insight
+cnn international q&a;
+cnn international special event
+cnn international world business this week
+cnn international world news
+cnn larry king live
+cnn larry king weekend
+cnn late edition
+cnn late edition with wolf blitzer
+cnn live at daybreak
+cnn live event/special
+cnn live on location
+cnn live saturday
+cnn live sunday
+cnn live this morning
+cnn live today
+cnn money morning
+cnn moneyline news hour
+cnn moneyline weekend
+cnn movers
+cnn news central
+cnn news site
+cnn newsnight aaron brown
+cnn newsnight with abby phillip
+cnn newsroom
+cnn novak, hunt & shields
+cnn on the story
+cnn page one
+cnn page one with nick charles
+cnn people in the news
+cnn perspectives
+cnn pinnacle
+cnn presents
+cnn reliable sources
+cnn right now
+cnn saturday
+cnn saturday edition
+cnn saturday morning news
+cnn saturday night
+cnn science and technology week
+cnn showbiz this weekend
+cnn showdown: iraq
+cnn special report with aaron brown
+cnn special reports
+cnn spotlight
+cnn student news
+cnn sunday
+cnn sunday evening
+cnn sunday morning
+cnn sunday night
+cnn take five
+cnn talkback live
+cnn the point
+cnn the point with greta van susteren
+cnn the spin room
+cnn this morning
+cnn today
+cnn tonight
+cnn travel now
+cnn wolf blitzer reports
+cnn world report
+cnn worldbeat
+cnn your health
+cnn&time;
+cnn's amanpour
+cnn's the arena with kasie hunt
+cnn.com
+cnn/time
+cnn: special investigations unit
+cnndotcom
+cnngo
+connect the world
+crime and justice with ashleigh banfield
+crimes of the century
+crossfire
+cuomo prime time
+d.l. hughley breaks the news
+death row stories
+diplomatic license
+dolans unscripted
+don lemon tonight
+dr. drew
+early edition
+early start
+early start with ashleigh banfield and zoraida sambolin
+early start with john berman and zoraida sambolin
+early start with rahel solomon
+earth matters
+ebiz asia
+erin burnett outfront
+evans, novak, hunt & shields
+fareed zakaria gps
+first move with julia chatterley
+first of all with victor blackwell
+glenn beck
+global challenges
+greenfield at large
+hala gorani tonight
+house call with dr. sanjay gupta
+idesk
+in case you missed it
+in the arena
+in the money
+inside africa
+inside asia
+inside man
+inside politics
+inside politics sunday
+insight
+international correspondents
+isa soares tonight
+issue number one
+issues with jane velez-mitchell
+jane velez-mitchell
+john king, usa
+joy behar show
+judy woodruff's inside politics
+king charles
+larry king live
+larry king live weekend
+laura coates live
+legal view with ashleigh banfield
+live from the headlines
+live from...
+live on location
+living golf
+lou dobbs moneyline
+lou dobbs this week
+lou dobbs tonight
+moneyline news hour
+moneyweek
+morning news
+mornings with paula zahn
+nancy grace
+new day
+new day saturday
+new day sunday
+news from cnn
+news stream
+newsday
+newsroom/world view
+next@cnn
+null
+on the story
+one world with zain asher
+open court
+open house
+out in the open
+parker spitzer
+paula zahn now
+people in the news
+piers morgan live
+piers morgan tonight
+pinnacle
+point
+prism
+q&a;
+q&a; with jim clancy
+q&a; with zain verjee
+q&a; with zain verjee and jim clancy
+quest means business
+reliable sources
+rick's list
+s.e. cupp unfiltered
+sanjay gupta md
+saturday
+saturday morning news
+science and technology week
+showbiz this week
+showbiz today
+showbiz tonight
+smerconish
+special event
+special report
+starting point with soledad o'brien
+state of the race with kasie hunt
+state of the union
+state of the union with candy crowley
+state of the union with john king
+student news
+sunday
+sunday morning news
+talk asia
+talkback live
+target: terrorism
+the 11th hour
+the amanpour hour
+the axe files
+the chris wallace show
+the global brief with bianca nobilo
+the hunt with john walsh
+the lead with jake tapper
+the next list
+the point
+the point with greta van susteren
+the situation room
+the sixties
+the source with kaitlan collins
+the spin room
+the sporting life with jim huber
+the turnaround
+the van jones show
+the whole story with anderson cooper
+the wonder list with bill weir
+this life with lisa ling
+this week at war
+this week in politics
+unguarded with rachel nichols
+vital signs with dr. sanjay gupta
+weekend early start
+who's talking to chris wallace
+wolf
+wolf blitzer reports
+world beat
+world report
+worldbeat
+worldview
+your bottom line
+your health
+your money
+your world today

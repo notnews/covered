@@ -114,6 +114,22 @@ def test_clip_handles_videotape_and_audio_markers() -> None:
     assert by["JOHN ROE"] == "clip"
 
 
+def test_programme_name_as_role_is_staff_not_a_guest() -> None:
+    # CNN introduces its own people by the show they work on. Counting those as
+    # external sources both overstates guests and does so unevenly by year,
+    # since the shows concerned are mostly early-2000s.
+    text = (
+        "ROBERT NOVAK, CAPITAL GANG: Let me put it this way. "
+        "JONATHAN MANN, INSIGHT (voice-over): Around the world tonight. "
+        "JANE DOE, UKRAINIAN REFUGEE: We left in the night."
+    )
+    turns = speakers.parse_turns(text, era_id="era1")
+    by = {t.speaker_raw: t.staff_flag for t in turns}
+    assert by["ROBERT NOVAK"] == "staff"
+    assert by["JONATHAN MANN"] == "staff"  # delivery tag stripped before matching
+    assert by["JANE DOE"] == "guest"
+
+
 def test_empty_text_returns_no_turns() -> None:
     assert speakers.parse_turns("", era_id="era3") == []
     assert speakers.parse_turns("   \n  ", era_id="era3") == []

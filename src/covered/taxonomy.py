@@ -37,6 +37,7 @@ from covered.config import REFERENCE
 __all__ = [
     "EPISTEMIC_ROLES",
     "SECTORS",
+    "SECTOR_DEFAULT_ROLE",
     "SourceLabel",
     "classify",
     "strip_modifiers",
@@ -78,7 +79,7 @@ EPISTEMIC_ROLES: tuple[str, ...] = (
 # Where the epistemic lexicon is silent, fall back on what the sector implies.
 # Every one of these is a judgement call, so classify() tags the result
 # epistemic_source="sector_default" and the census reports that share.
-_SECTOR_DEFAULT_ROLE: dict[str, str] = {
+SECTOR_DEFAULT_ROLE: dict[str, str] = {
     "government_executive": "principal",
     "government_legislative": "principal",
     "government_subnational": "principal",
@@ -442,7 +443,13 @@ def classify(role_raw: str | None, name: str | None = None) -> SourceLabel:
         form = _media_by_form(role_clean)
         n_sector, n_role, n_rule = _from_name_title(name or "")
         if form:
+            # A speaker introduced by outlet alone is a visiting journalist, and
+            # the form settles the epistemic role as well as the sector -- the
+            # same judgement the "journalist" keyword makes, reached
+            # typographically rather than lexically.
             sector, sector_rule, sector_source = "media", form, "form"
+            if not epistemic_role:
+                epistemic_role, epistemic_source = "commentator", "form"
         elif n_sector:
             sector, sector_rule, sector_source = n_sector, n_rule, "name_title"
             if not epistemic_role:
@@ -457,7 +464,7 @@ def classify(role_raw: str | None, name: str | None = None) -> SourceLabel:
             )
     sector = sector or "unknown"
     if not epistemic_role:
-        epistemic_role = _SECTOR_DEFAULT_ROLE.get(sector, "unresolved")
+        epistemic_role = SECTOR_DEFAULT_ROLE.get(sector, "unresolved")
 
     standing = _standing(role_clean)
     # Leaving a post ends the standing that made someone a principal or a

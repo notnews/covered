@@ -30,9 +30,9 @@ epistemic labels are currently imputed from sector rather than read off the role
 string. If the trend only survives under imputation it is an artefact of the
 sector defaults, not a fact about the corpus:
 
-    lexicon   only turns whose epistemic role came from the epistemic lexicon
-    imputed   plus turns given their sector's default role
-    all       plus turns resolved by the standing rule and name honorifics
+    measured  the role string or name settled it (keyword, outlet form,
+              "former" standing rule, name honorific)
+    imputed   plus turns given whatever their sector implies
 """
 
 from __future__ import annotations
@@ -60,12 +60,16 @@ PROXIMITY: dict[str, str] = {
 }
 
 # Which epistemic_source values each reporting regime admits.
+#
+# "measured" is every route that reads the role string or speaker name --
+# a keyword, the typographic outlet convention, the "former" standing rule, a
+# name honorific. "sector_default" alone is imputation: it assigns whatever the
+# sector implies, so it cannot show the epistemic axis moving independently of
+# sector, which is exactly the claim the headline makes.
+MEASURED = frozenset({"lexicon", "form", "standing_rule", "name_title", "topic_needed"})
 REGIMES: dict[str, frozenset[str]] = {
-    "lexicon": frozenset({"lexicon"}),
-    "imputed": frozenset({"lexicon", "sector_default"}),
-    "all": frozenset(
-        {"lexicon", "sector_default", "standing_rule", "name_title", "topic_needed"}
-    ),
+    "measured": MEASURED,
+    "imputed": MEASURED | {"sector_default"},
 }
 
 Key = tuple[int, str, str, str, str]  # year, mode, staff_flag, proximity, epi_source
@@ -138,6 +142,42 @@ def _ratio_series(df: pd.DataFrame, regime: str) -> pd.DataFrame:
     return out
 
 
+def _report_bounds(df: pd.DataFrame) -> None:
+    """Worst-case bounds on the direct-access share, given uncoded turns.
+
+    Shares computed on the coded subset alone are only interpretable if coding
+    is unrelated to what is being coded. It is not: coverage rises steadily
+    across the period. So report what the share could be if every uncoded turn
+    were direct, and if none were. When those bounds are wider than the
+    year-to-year variation, no trend claim survives without an explicit
+    assumption about the uncoded turns.
+    """
+    total = df.groupby("year")["n_turns"].sum()
+    coded = df[
+        df["epistemic_source"].isin(sorted(MEASURED))
+        & (df["proximity"] != "unresolved")
+    ]
+    direct = (
+        coded[coded["proximity"] == "direct"]
+        .groupby("year")["n_turns"]
+        .sum()
+        .reindex(total.index)
+        .fillna(0)
+    )
+    known = coded.groupby("year")["n_turns"].sum().reindex(total.index).fillna(0)
+    lo, hi = direct / total, (direct + (total - known)) / total
+    point = (direct / known).replace([float("inf")], float("nan"))
+
+    print("\n=== bounds on the direct-access share ===")
+    print(f"  mean bound width      {(hi - lo).mean():.3f}")
+    print(f"  spread of point est.  {point.max() - point.min():.3f}")
+    if (hi - lo).mean() > (point.max() - point.min()):
+        print(
+            "  -> bounds are wider than the between-year signal: the coded-subset\n"
+            "     series cannot support a trend claim on its own."
+        )
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument(
@@ -179,8 +219,10 @@ def main() -> None:
     # 2025 is Jan-Mar only; excluded from the trend, kept in the written table.
     sub = sub[sub["year"] < 2025]
 
+    _report_bounds(sub)
+
     print(f"\n=== direct-access vs commentary, {args.staff} turns ===")
-    for regime in ("lexicon", "imputed", "all"):
+    for regime in ("measured", "imputed"):
         s = _ratio_series(sub, regime)
         if s.empty:
             continue
