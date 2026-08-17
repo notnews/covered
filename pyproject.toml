@@ -111,7 +111,7 @@ test = [
 ]
 dev = [
     "ruff>=0.14",
-    "pyright>=1.1.390",
+    "pyright>=1.1.411",
     "pydoclint>=0.5",
     "pre-commit>=3.7",
     "pandas-stubs",
