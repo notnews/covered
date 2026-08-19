@@ -477,7 +477,7 @@ dev = [
     { name = "pydoclint", specifier = ">=0.5" },
     { name = "pyright", specifier = ">=1.1.411" },
     { name = "pytest", specifier = ">=8" },
-    { name = "pytest-cov", specifier = ">=5" },
+    { name = "pytest-cov", specifier = ">=7.1.0" },
     { name = "ruff", specifier = ">=0.14" },
     { name = "simcheck", git = "https://github.com/finite-sample/simcheck" },
 ]
@@ -485,13 +485,13 @@ docs = [
     { name = "furo" },
     { name = "myst-parser" },
     { name = "py-canon", git = "https://github.com/gojiplus/py-canon?rev=v1" },
-    { name = "sphinx", specifier = ">=8" },
+    { name = "sphinx", specifier = ">=9.0.4" },
     { name = "sphinx-copybutton" },
 ]
 test = [
     { name = "en-core-web-sm", url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl" },
     { name = "pytest", specifier = ">=8" },
-    { name = "pytest-cov", specifier = ">=5" },
+    { name = "pytest-cov", specifier = ">=7.1.0" },
     { name = "simcheck", git = "https://github.com/finite-sample/simcheck" },
 ]
 
@@ -1372,8 +1372,8 @@ wheels = [
 
 [[package]]
 name = "py-canon"
-version = "1.0.0.post18.dev0+3ebfb1c"
-source = { git = "https://github.com/gojiplus/py-canon?rev=v1#3ebfb1cd620e229a5e487723ae06e535bc1024ee" }
+version = "1.1.0"
+source = { git = "https://github.com/gojiplus/py-canon?rev=v1#f756be7a6e4dd0ea2a006c215e39ed2e1e29a412" }
 
 [[package]]
 name = "pyarrow"
