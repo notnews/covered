@@ -6,12 +6,35 @@ set of constants and lets tests reference the same boundaries the pipeline uses.
 
 from __future__ import annotations
 
+import os
 from datetime import date
 from pathlib import Path
 
 # --- paths -----------------------------------------------------------------
 PACKAGE_ROOT = Path(__file__).resolve().parent
-ANALYSIS_ROOT = PACKAGE_ROOT.parent.parent
+
+
+def _analysis_root() -> Path:
+    """Locate the analysis checkout that holds ``data/`` and ``outputs/``.
+
+    Walking up from ``__file__`` only works for an editable install inside
+    the checkout. From a built wheel the package lives in ``site-packages``,
+    where no ``data/`` exists, so fall back to ``COVERED_ANALYSIS_ROOT`` and
+    then to the working directory (the CLI is run from the analysis root).
+
+    Returns:
+        Root directory containing ``data/`` and ``outputs/``.
+    """
+    env = os.environ.get("COVERED_ANALYSIS_ROOT")
+    if env:
+        return Path(env).resolve()
+    checkout = PACKAGE_ROOT.parent.parent
+    if (checkout / "data" / "reference").is_dir():
+        return checkout
+    return Path.cwd()
+
+
+ANALYSIS_ROOT = _analysis_root()
 DATA = ANALYSIS_ROOT / "data"
 RAW = DATA / "raw"
 INTERIM = DATA / "interim"
