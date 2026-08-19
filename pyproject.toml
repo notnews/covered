@@ -98,7 +98,7 @@ docs = ["sphinx>=8", "furo", "myst-parser", "sphinx-copybutton", "py-canon @ git
 # job installs only this group, not `dev`, against a built wheel).
 test = [
     "pytest>=8",
-    "pytest-cov>=5",
+    "pytest-cov>=7.1.0",
     # Tests load this spacy model by name; declaring it as a normal
     # URL-pinned dependency lets `uv sync`/`uv pip install --group test`
     # install it (canon's reusable CI has no hook for an imperative
