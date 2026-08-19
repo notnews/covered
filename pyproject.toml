@@ -93,7 +93,7 @@ ignore-words-list = "pres"
 skip = "*.csv,uv.lock"
 
 [dependency-groups]
-docs = ["sphinx>=8", "furo", "myst-parser", "sphinx-copybutton", "py-canon @ git+https://github.com/gojiplus/py-canon@v1"]
+docs = ["sphinx>=9.0.4", "furo", "myst-parser", "sphinx-copybutton", "py-canon @ git+https://github.com/gojiplus/py-canon@v1"]
 # Everything actually needed to run the test suite (canon's wheel-smoke-test
 # job installs only this group, not `dev`, against a built wheel).
 test = [
