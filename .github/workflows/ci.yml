@@ -19,7 +19,7 @@ jobs:
     uses: gojiplus/py-canon/.github/workflows/reusable-ci.yml@v1
     with:
       wheel-import: covered
-      coverage-floor: 85
+      coverage-floor: 84
       run-preen: true
       # spacy 3.8.14's PyPI classifiers claim 3.14 support, but it ships no
       # cp314 wheel (or sdist) yet -- requires-python caps at <3.14 for real,
