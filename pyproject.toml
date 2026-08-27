@@ -65,8 +65,12 @@ convention = "google"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-q"
+addopts = ["-q", "--strict-config", "--strict-markers", "-ra"]
 pythonpath = ["src"]
+minversion = "6"
+log_level = "INFO"
+xfail_strict = true
+filterwarnings = ["error"]
 
 [tool.coverage.run]
 source = ["covered"]
