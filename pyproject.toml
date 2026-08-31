@@ -117,7 +117,7 @@ dev = [
     "ruff>=0.16.4",
     "pyright>=1.1.411",
     "pydoclint>=0.9.1",
-    "pre-commit>=4.6.1",
+    "pre-commit>=4.6.2",
     "pandas-stubs",
     { include-group = "test" },
 ]
