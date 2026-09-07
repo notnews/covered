@@ -31,7 +31,7 @@ dependencies = [
 license-files = ["LICENSE"]
 
 [project.optional-dependencies]
-llm = ["anthropic>=1.0.0"]
+llm = ["anthropic>=1.2.0"]
 
 [project.scripts]
 covered = "covered.cli:app"
