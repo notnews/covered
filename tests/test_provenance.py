@@ -23,19 +23,20 @@ def test_parse_uid(uid: str, expected: tuple[str | None, int | None]) -> None:
 
 
 def test_parse_url_date_modern() -> None:
-    url = "http://transcripts.cnn.com/TRANSCRIPTS/2022.02.01/acd.01.html"
+    url = "http://transcripts.example.test/TRANSCRIPTS/2022.02.01/acd.01.html"
     assert prov.parse_url_date(url) == date(2022, 2, 1)
 
 
 def test_parse_url_date_missing() -> None:
     assert (
-        prov.parse_url_date("http://transcripts.cnn.com/TRANSCRIPTS/index.html") is None
+        prov.parse_url_date("http://transcripts.example.test/TRANSCRIPTS/index.html")
+        is None
     )
 
 
 def test_parse_provenance_full_row() -> None:
     row = {
-        "url": "http://transcripts.cnn.com/TRANSCRIPTS/2022.02.01/acd.01.html",
+        "url": "http://transcripts.example.test/TRANSCRIPTS/2022.02.01/acd.01.html",
         "channel.name": "CNN",
         "program.name": "Anderson Cooper 360 Degrees",
         "uid": "acd.01",
@@ -64,7 +65,7 @@ def test_parse_provenance_full_row() -> None:
 
 def test_parse_provenance_unknown_show_code_has_no_host() -> None:
     row = {
-        "url": "http://transcripts.cnn.com/TRANSCRIPTS/2001.05.10/xyz.01.html",
+        "url": "http://transcripts.example.test/TRANSCRIPTS/2001.05.10/xyz.01.html",
         "program.name": "Some Program",
         "uid": "xyz.01",
         "path": "2001.05.10/xyz.01.html",
