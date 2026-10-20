@@ -418,7 +418,7 @@ docs = [
     { name = "furo" },
     { name = "myst-parser" },
     { name = "py-canon", git = "https://github.com/gojiplus/py-canon?rev=v1" },
-    { name = "sphinx", specifier = ">=9.0.4" },
+    { name = "sphinx", specifier = ">=9.1.0" },
     { name = "sphinx-copybutton" },
 ]
 test = [
