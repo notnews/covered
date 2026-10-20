@@ -14,3 +14,9 @@ outputs/figures/
 dist/
 .env
 .DS_Store
+.coverage
+coverage.xml
+htmlcov/
+build/
+docs/_build/
+docs/_autosummary/

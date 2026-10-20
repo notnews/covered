@@ -22,8 +22,8 @@ format:  ## ruff format + import sort
 	$(PY) ruff format src tests
 	$(PY) ruff check --fix src tests
 
-typecheck:  ## mypy
-	$(PY) mypy
+typecheck:  ## pyright
+	$(PY) pyright
 
 test:  ## pytest on fixtures (no data download)
 	$(PY) pytest
