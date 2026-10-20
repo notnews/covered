@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
   schedule:
     - cron: "17 6 * * 1"  # weekly: surface ecosystem drift on quiet repos
 
@@ -25,10 +26,4 @@ jobs:
       # cp314 wheel (or sdist) yet -- requires-python caps at <3.14 for real,
       # so override canon's default ["3.11", "3.14"] matrix accordingly.
       python-versions: '["3.12", "3.13"]'
-      # TODO(pydoclint): re-enable once pydoclint's docstring_parser_fork pin
-      # and anthropic's docstring-parser (llm extra) stop colliding on the
-      # `docstring_parser` import namespace when `uv sync --all-groups
-      # --all-extras` installs both into one venv. `pydoclint src/` itself
-      # reports zero violations in isolation (verified 2026-07-24) -- this is
-      # a packaging conflict, not a lint failure.
-      run-pydoclint: false
+      run-pydoclint: true

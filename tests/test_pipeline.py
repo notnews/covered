@@ -19,7 +19,7 @@ def _corpus() -> pd.DataFrame:
     return pd.DataFrame(
         [
             {
-                "url": "http://transcripts.cnn.com/TRANSCRIPTS/2022.02.01/acd.01.html",
+                "url": "http://transcripts.example.test/TRANSCRIPTS/2022.02.01/acd.01.html",
                 "channel.name": "CNN",
                 "program.name": "Anderson Cooper 360",
                 "uid": "acd.01",
@@ -39,7 +39,7 @@ def _corpus() -> pd.DataFrame:
                 ),
             },
             {
-                "url": "http://transcripts.cnn.com/TRANSCRIPTS/2022.02.02/acd.02.html",
+                "url": "http://transcripts.example.test/TRANSCRIPTS/2022.02.02/acd.02.html",
                 "channel.name": "CNN",
                 "program.name": "Anderson Cooper 360",
                 "uid": "acd.02",
