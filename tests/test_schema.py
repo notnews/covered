@@ -7,7 +7,7 @@ from covered import schema
 
 def _valid_row() -> dict[str, object]:
     return {
-        "url": "http://transcripts.cnn.com/TRANSCRIPTS/2022.02.01/acd.01.html",
+        "url": "http://transcripts.example.test/TRANSCRIPTS/2022.02.01/acd.01.html",
         "channel.name": "CNN",
         "program.name": "Anderson Cooper 360 Degrees",
         "uid": "acd.01",

@@ -257,7 +257,7 @@ def test_a_skewed_mean_at_small_n_under_covers() -> None:
     """The finding, pinned because this package points ``bootstrap_ci`` here.
 
     The percentile bootstrap is not second-order accurate for the mean of a
-    skewed distribution: the interval is centred on the sample mean and inherits
+    skewed distribution: the interval is centered on the sample mean and inherits
     its skew instead of correcting for it. That is the standard motivation for
     BCa and the bootstrap-t, so it is a known property rather than a bug
     introduced here --- but per-source quote counts in the CNN corpus are
@@ -546,7 +546,7 @@ def test_well_covered_sources_cover() -> None:
     Thirty Zipf-distributed sources over 6000 quotes, so the smallest still has
     about 110 events and survives any recall with certainty; recall 0.9,
     precision 0.95, both handed back to ``simulate_hhi_ci`` exactly. This is the
-    most favourable test available --- the correction is given the model that
+    most favorable test available --- the correction is given the model that
     generated the corruption and the parameters that generated it.
 
     Measured 0.945 over 1000 replicates at the library's default 1000 draws, with
@@ -557,7 +557,7 @@ def test_well_covered_sources_cover() -> None:
     because anything was corrected.
 
     The same 1000 replicates at 199 draws give 0.938, and that seven-tenths of a
-    point is the ``n_draws`` artefact described in the module docstring rather
+    point is the ``n_draws`` artifact described in the module docstring rather
     than a property of the estimator.
     """
     study = _hhi_study(_draw_desk_sources, recall=0.9, precision=0.95)
