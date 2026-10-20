@@ -198,7 +198,7 @@ def plot_president_share(
 
     ``pres`` is the ``president_share_annual.csv`` frame (columns ``year``,
     ``mode``, ``president_id``, ``president_share``). Administrations are shaded
-    and labelled so the spike maps onto who holds the office.
+    and labeled so the spike maps onto who holds the office.
     """
     g = pres[pres["mode"] == mode].sort_values("year")
     if g.empty:

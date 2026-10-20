@@ -89,6 +89,7 @@ allow-init-docstring = true
 exclude = '\.venv|tests|docs'
 
 [tool.codespell]
+builtin = "clear,rare,en-GB_to_en-US"
 # "pres" is the `president_share_annual.csv` dataframe abbreviation used
 # throughout figures.py/roles.py, not a typo of "press".
 ignore-words-list = "pres"
