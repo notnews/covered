@@ -115,7 +115,7 @@ test = [
     "simcheck @ git+https://github.com/finite-sample/simcheck",
 ]
 dev = [
-    "ruff>=0.17.0",
+    "ruff>=0.17.1",
     "pyright>=1.1.414",
     "pydoclint>=0.9.1",
     "pre-commit>=4.6.2",
