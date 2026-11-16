@@ -15,7 +15,7 @@ keywords = [
     "computational-social-science",
 ]
 dependencies = [
-    "pandas>=3.1.0",
+    "pandas>=3.1.1",
     "pyarrow>=26.0.1",
     "pandera>=0.35.0",
     "pyDataverse>=0.3.5",
