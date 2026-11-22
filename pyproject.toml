@@ -5,7 +5,7 @@ description = "HHI of quote attribution and on-air source concentration in CNN t
 readme = "README.md"
 requires-python = ">=3.12,<3.14"
 license = "MIT"
-authors = [{ name = "Gaurav Sood", email = "gsood07@gmail.com" }]
+authors = [{ name = "Gaurav Sood" }]
 keywords = [
     "media",
     "news",
