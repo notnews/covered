@@ -25,7 +25,7 @@ dependencies = [
     "numpy>=2.5.5",
     "scipy>=1.18.1",
     "matplotlib>=3.11.2",
-    "typer>=0.27.3",
+    "typer>=0.29.1",
     "click>=8.5.1",
 ]
 license-files = ["LICENSE"]
